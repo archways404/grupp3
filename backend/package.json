@@ -3,8 +3,8 @@
 	"version": "0.0.1",
 	"private": false,
 	"scripts": {
-		"dev": "node dev.js",
-		"prod": "node main.js"
+		"dev": "nodemon dev.js",
+		"prod": "nodemon main.js"
 	},
 	"dependencies": {
 		"cors": "^2.8.5",
