@@ -1,19 +1,19 @@
 import React from 'react'
 import ReactDOM from 'react-dom/client'
-import { Router, Routes, Route } from 'react-router-dom';
+import { HashRouter, Routes, Route } from 'react-router-dom';
 
-import App from './App.jsx';
+import App from './pages/App.jsx';
 import './index.css';
 
 ReactDOM.createRoot(document.getElementById('root')).render(
 	<React.StrictMode>
-		<Router>
+		<HashRouter>
 			<Routes>
 				<Route
 					path="/"
 					element={<App />}
 				/>
 			</Routes>
-		</Router>
+		</HashRouter>
 	</React.StrictMode>
 );

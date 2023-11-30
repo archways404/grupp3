@@ -18,8 +18,9 @@ app.use(express.urlencoded({ extended: true }));
 
 // Configuration for the cors
 const corsOptions = {
-	origin: 'localhost',
+	origin: 'http://localhost:5173',
 	methods: 'GET,POST',
+	Credentials: true,
 };
 
 app.options('*', cors(corsOptions));
@@ -34,6 +35,12 @@ app.post('/api/', async (req, res) => {
 	// Example of how to use a function from the functions folder
 	const placeHolderFunction = await placeHolder.placeholder();
 	console.log(placeHolderFunction);
+});
+
+app.post('/api/test', async (req, res) => {
+	const test = req.body.test;
+	console.log(test);
+	res.status(200).send({ test: test });
 });
 
 // Configuration for the server
