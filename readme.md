@@ -8,7 +8,7 @@ Introduction text
 
 [Backend Documentation](https://github.com/archways404/grupp3/blob/main/docs/doc_backend.md)
 
-[Frontend Documentation](hhttps://github.com/archways404/grupp3/blob/main/docs/doc_frontend.md)
+[Frontend Documentation](https://github.com/archways404/grupp3/blob/main/docs/doc_frontend.md)
 
 
 ## Setup Instructions
