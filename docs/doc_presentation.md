@@ -17,7 +17,8 @@
 
 ### Language(s)
 ```javascript
-- JavaScript Frontend
-- JavaScript Backend
+JavaScript Frontend
+------------------- 
+JavaScript Backend
 ```
 - One language (swap between front & backend easier)
