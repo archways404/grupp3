@@ -30,9 +30,3 @@ Same language for backend and frontend:
 - Move between backend & frontend
 
 **Subject to change...**
-
-=======
-```javascript
-JavaScript
-```
-- One language (swap between front & backend easier)
