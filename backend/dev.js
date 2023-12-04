@@ -39,7 +39,7 @@ app.post('/api/', async (req, res) => {
 
 app.post('/api/test', async (req, res) => {
 	const test = req.body.test;
-	console.log(test);
+	console.log('Message:', test);
 	res.status(200).send({ test: test });
 });
 

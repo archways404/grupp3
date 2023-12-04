@@ -31,3 +31,8 @@ Same language for backend and frontend:
 
 **Subject to change...**
 
+=======
+```javascript
+JavaScript
+```
+- One language (swap between front & backend easier)

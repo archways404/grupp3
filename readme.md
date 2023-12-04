@@ -10,6 +10,9 @@ Introduction text
 
 [Frontend Documentation](https://github.com/archways404/grupp3/blob/main/docs/doc_frontend.md)
 
+[Project Presentation](https://github.com/archways404/grupp3/blob/main/docs/doc_presentation.md)
+
+
 
 ## Setup Instructions
 
