@@ -1,8 +1,24 @@
-
 # Project #3
 
 ## Projektbeskrivning
-**TBD...**
+
+En mash-up som hjälper dig att handla lokalt i danmark från hela världen. 
+
+Den utgår från vart du är, ger resealternativ samt kostnad.
+
+Mash-upen kommer ge dig priset för vad drycken kostar samt resan dit i önskad valuta.
+
+## API:
+
+Salling:
+https://developer.sallinggroup.com/api-reference
+
+Google travel partner:
+https://developers.google.com/hotels/hotel-prices/api-reference/rest
+
+Free currency:
+https://freecurrencyapi.com/
+
 
 ## Frameworks
 
