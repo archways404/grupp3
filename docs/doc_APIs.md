@@ -24,17 +24,17 @@
 | `process.env.SALLING_BEARER_TOKEN` | `string` | **Required**. Bearer token for authorization|
 
 
-### Google Travel Partner
+### Nominatim OpenStreetMap
 
 #### Placeholder
 
 ```http
-  GET 
+  GET https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(address)}
 ```
 
 | Parameter | Type     | Description                |
 | :-------- | :------- | :------------------------- |
-| `process.env.GOOGLE` | `string` | **Required**. Token for authorization|
+| `address` | `string` | **Required**. The address of the user|
 
 #### Placeholder
 
