@@ -10,15 +10,11 @@ Mash-upen kommer ge dig priset för vad drycken kostar samt resan dit i önskad 
 
 ## API:
 
-Salling:
-https://developer.sallinggroup.com/api-reference
+- [Salling](https://developer.sallinggroup.com/api-reference)
 
-Google travel partner:
-https://developers.google.com/hotels/hotel-prices/api-reference/rest
+- [Nominatim](https://nominatim.org/release-docs/latest/api/Search/)
 
-Free currency:
-https://freecurrencyapi.com/
-
+- [FreeCurrency](https://freecurrencyapi.com/)
 
 ## Frameworks
 

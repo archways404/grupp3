@@ -1,85 +1,102 @@
 
-# [NAMEPLATE]
+# GROUP 3
 
 Introduction text
 
 
 ## Documentation
 
-[Backend Documentation](https://github.com/archways404/grupp3/blob/main/docs/doc_backend.md)
+[![](https://img.shields.io/badge/API_Documentation-100000?style=for-the-badge&logo=googledocs&logoColor=2BFF00&labelColor=22272e&color=22272e)](https://github.com/archways404/grupp3/blob/main/docs/doc_API.md)
 
-[Frontend Documentation](https://github.com/archways404/grupp3/blob/main/docs/doc_frontend.md)
+[![](https://img.shields.io/badge/Coding_GUIDELINES-100000?style=for-the-badge&logo=googledocs&logoColor=2BFF00&labelColor=22272e&color=22272e)](https://github.com/archways404/grupp3/blob/main/docs/doc_guidelines.md)
 
-[Project Presentation](https://github.com/archways404/grupp3/blob/main/docs/doc_presentation.md)
+[![](https://img.shields.io/badge/Backend_Documentation-100000?style=for-the-badge&logo=googledocs&logoColor=2BFF00&labelColor=22272e&color=22272e)](https://github.com/archways404/grupp3/blob/main/docs/doc_backend.md)
 
+[![](https://img.shields.io/badge/Frontend_Documentation-100000?style=for-the-badge&logo=googledocs&logoColor=2BFF00&labelColor=22272e&color=22272e)](https://github.com/archways404/grupp3/blob/main/docs/doc_frontend.md)
+
+[![](https://img.shields.io/badge/Presentation-100000?style=for-the-badge&logo=googledocs&logoColor=2BFF00&labelColor=22272e&color=22272e)](https://github.com/archways404/grupp3/blob/main/docs/doc_presentation.md)
 
 
 ## Setup Instructions
 
-Clone the project
+### Install NodeJS
+Download and install NodeJS:
 
+```bash
+https://nodejs.org/en/download
+```
+
+To verify installation of NodeJS run the following command in your terminal:
+
+```bash
+node -v
+```
+
+If you get something along the lines of:
+```bash
+v18.16.0
+```
+Then you have installed NodeJS successfully and can proceed!
+
+If you encounter an issue with the "node -v" command, verify that NodeJS is installed correctly.
+
+
+### Download the files
+
+Open a terminal window and navigate to the directory where you want to keep the project files:
+```bash
+cd path/to/project
+```
+
+**Clone the project (using Git) OR Download the files**
+
+***Git:***
 ```bash
 git clone https://github.com/archways404/grupp3
 ```
+***Download:***
+```bash
+Download: https://github.com/archways404/grupp3/archive/refs/heads/main.zip
+```
 
-Go to the project directory
-
+Navigate into the base folder:
 ```bash
 cd grupp3
 ```
 
-The directory is seperated into two folders:
-
-- frontend
-- backend
-
-To run or interact with the different parts, you need to use "cd" into the correct folder where the rest of the code is kept.
-
-Example:
-
-```bash
-cd backend
-```
-
-or
-
-```bash
-cd frontend
-```
-
-To go back a directory:
-```bash
-cd ..
-```
-
-
 ### Install dependencies
 
-Backend:
-```bash
-cd backend
-npm install
-```
+To install dependencies, make sure that you are in the directory ***grupp3*** and then run the following command:
 
-Frontend:
 ```bash
-cd frontend
-npm install
+npm run install
 ```
 
 ### Run the code
 
-Start the backend server:
-
+To run the project, make sure that you are in the directory ***grupp3*** and then run the following command:
 ```bash
-cd backend
 npm run dev
 ```
 
-Start the frontend server:
+## Extras
 
+#### Install backend dependencies:
 ```bash
-cd frontend
-npm run dev
+npm run install:backend
 ```
 
+#### Install frontend dependencies:
+```bash
+npm run install:frontend
+```
+
+#### Run backend:
+```bash
+npm run dev:backend
+```
+
+#### Run frontend:
+```bash
+npm run dev:frontend
+```

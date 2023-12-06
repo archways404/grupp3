@@ -24,27 +24,17 @@
 | `process.env.SALLING_BEARER_TOKEN` | `string` | **Required**. Bearer token for authorization|
 
 
-### Google Travel Partner
+### Nominatim OpenStreetMap
 
 #### Placeholder
 
 ```http
-  GET 
+  GET https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(address)}
 ```
 
 | Parameter | Type     | Description                |
 | :-------- | :------- | :------------------------- |
-| `process.env.GOOGLE` | `string` | **Required**. Token for authorization|
-
-#### Placeholder
-
-```http
-  GET 
-```
-
-| Parameter | Type     | Description                |
-| :-------- | :------- | :------------------------- |
-| `process.env.GOOGLE_TRAVEL_PARTNER` | `string` | **Required**. Token for authorization|
+| `address` | `string` | **Required**. The address of the user|
 
 
 ### Free Currency
@@ -52,19 +42,34 @@
 #### Placeholder
 
 ```http
-  GET 
+  GET https://api.freecurrencyapi.com/v1/latest?apikey=${FREE_CURRENCY_KEY}
 ```
 
 | Parameter | Type     | Description                |
 | :-------- | :------- | :------------------------- |
-| `process.env.FREE_CURRENCY` | `string` | **Required**. Token for authorization|
+| `process.env.FREE_CURRENCY_KEY` | `string` | **Required**. Key for authorization|
+
+### Nominatim OpenStreetMap
 
 #### Placeholder
 
 ```http
-  GET 
+  GET https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(address)}
 ```
 
 | Parameter | Type     | Description                |
 | :-------- | :------- | :------------------------- |
-| `process.env.FREE_CURRENCY` | `string` | **Required**. Token for authorization|
+| `address` | `string` | **Required**. The address of the user|
+
+
+### SkyScanner
+
+#### Placeholder
+
+```http
+  GET https://developers.skyscanner.net/docs/geo/overview
+```
+
+| Parameter | Type     | Description                |
+| :-------- | :------- | :------------------------- |
+| `process.env.` | `string` | **Required**. Key for authorization|
