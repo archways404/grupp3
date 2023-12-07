@@ -3,6 +3,8 @@
 
 Introduction text
 
+[![](https://img.shields.io/badge/YouTube_React_introduction-100000?style=for-the-badge&logo=react&logoColor=0C9AFF&labelColor=22272e&color=22272e)](https://www.youtube.com/watch?v=SqcY0GlETPk)
+
 ## Usage/Examples
 
 #### The basics:
