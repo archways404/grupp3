@@ -13,14 +13,28 @@ mongoose
 	})
 	.then(() => console.log('Connected to MongoDB'))
 	.catch((err) => console.error('Could not connect to MongoDB...', err));
-
-/*
-const messageSchema = new mongoose.Schema({
-	name: String,
-	text: String,
-	color: String,
-	timestamp: { type: Date, default: Date.now },
+  
+const arraySchema = new mongoose.Schema({
+	products: [
+		{
+			prod_id: String,
+			title: String,
+			img: String,
+			price: Number,
+		},
+	],
 });
 
-const Message = mongoose.model('Message', messageSchema);
-*/
+const ProductArray = mongoose.model('ProductArray', arraySchema);
+
+async function viewDatabaseContents() {
+	try {
+		const allData = await ProductArray.find();
+		console.log('Database Contents:', JSON.stringify(allData, null, 2));
+	} catch (err) {
+		console.error('Error fetching data from the database:', err);
+	}
+}
+
+viewDatabaseContents();
+

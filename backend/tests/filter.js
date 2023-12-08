@@ -5,7 +5,7 @@ const token = '5afa1009-3c70-425a-a975-7202189d9824';
 //const token = process.env.SALLING_BEARER_TOKEN;
 console.log(token);
 
-const product = 'soda';
+const product = 'øl';
 
 async function getProductCategory(product, token) {
 	const url = `https://api.sallinggroup.com/v1-beta/product-suggestions/relevant-products?query=${product}`;
@@ -29,20 +29,39 @@ async function getProductCategory(product, token) {
 	}
 }
 
+// search for product by title
+function findProductByTitle(transformedData, title) {
+	return transformedData.find((item) => item.product.title === title);
+}
+
+// search for product by id
+function findProductById(transformedData, prod_id) {
+	return transformedData.find((item) => item.product.prod_id === prod_id);
+}
+
 (async () => {
 	const products = await getProductCategory(product, token);
-	const product_list = [];
-	for (i in products) {
-		console.log(products[i].title);
-		console.log(products[i].price);
-		console.log(products[i].prod_id);
-		console.log('------------------');
-		product_list.push({
-			title: products[i].title,
-			price: products[i].price,
-			prod_id: products[i].prod_id,
-		});
-	}
-	console.log(product_list);
-	console.log(product_list.length);
+	console.log(products);
+	console.time('transformedData');
+	const transformedData = products.map((item) => {
+		return {
+			product: {
+				title: item.title,
+				//price: item.price,
+				prod_id: item.prod_id,
+			},
+		};
+	});
+	console.log(transformedData);
+	/*
+	const productDataByTitle = findProductByTitle(
+		transformedData,
+		'SodaStream kulsyrepatron 60 liter'
+	);
+	const productDataById = findProductById(transformedData, '113245');
+	console.log(productDataByTitle);
+	console.log(productDataById);
+  */
+
+	console.timeEnd('transformedData');
 })();
