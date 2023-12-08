@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom/client'
 import { HashRouter, Routes, Route } from 'react-router-dom';
 
 import App from './pages/App.jsx';
+import Home from './pages/Home.jsx';
 import './index.css';
 
 ReactDOM.createRoot(document.getElementById('root')).render(
@@ -11,6 +12,10 @@ ReactDOM.createRoot(document.getElementById('root')).render(
 			<Routes>
 				<Route
 					path="/"
+					element={<Home />}
+				/>
+				<Route
+					path="/app"
 					element={<App />}
 				/>
 			</Routes>
