@@ -1,7 +1,7 @@
 const dotenv = require('dotenv');
 dotenv.config();
 
-const token = '5afa1009-3c70-425a-a975-7202189d9824';
+const token = '';
 //const token = process.env.SALLING_BEARER_TOKEN;
 console.log(token);
 
