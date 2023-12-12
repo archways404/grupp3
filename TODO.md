@@ -11,10 +11,36 @@ Skriv namn och vilken del ni vill pröva och jobba med :D
 
 ## Items QRF
 
-- ***Location Page***
-- ***Search Page***
-- ***Products Page (Not quite ready yet)***
+Competed items - [X]
+Non-Completed items - []
 
+- ***Location Page***
+
+	- Backend:
+		- Byte av POST Endpoint - []                
+		- Byta namn på variabeln som skickas - []    
+		- Byta namn på variabeln som tas emot - []
+		- Skapa en fil för logiken - []
+		- Definiera logiken - []    
+	- Frontend:
+		- Byte av POST Endpoint - []                
+		- Byta namn på variabeln som skickas - []    
+		- Byta namn på variabeln som tas emot & spara till sessionStorage - []
+
+- ***Search***
+
+	- Backend:
+		- Byte av POST Endpoint
+		- Byta namn på variabeln som skickas
+		- Byta namn på variabeln som tas emot
+		- Skapa en fil för logiken
+		- Definiera logiken 
+	- Frontend:
+		- Byte av POST Endpoint - []                
+		- Byta namn på variabeln som skickas - []    
+		- Byta namn på variabeln som tas emot & spara till sessionStorage - []
+
+- ***Products Page (Not quite ready yet)***
 
 
 ## Location
