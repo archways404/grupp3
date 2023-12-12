@@ -3,7 +3,7 @@ import { useState, useEffect } from 'react';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
-function Home() {
+function Main() {
 	// Values
 	const [location, setLocation] = useState('');
 	const [cordinates, setCordinates] = useState({});
@@ -194,4 +194,4 @@ function Home() {
 	);
 }
 
-export default Home;
+export default Main;

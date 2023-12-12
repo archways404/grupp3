@@ -8,6 +8,7 @@ const fs = require('fs');
 
 // Import functions from the functions folder
 const placeHolder = require('./functions/placeHolder.js');
+const calc = require('./functions/calcFn.js');
 
 // Configuration for the port
 const port = 9999;
@@ -41,6 +42,23 @@ app.post('/api/test', async (req, res) => {
 	const test = req.body.test;
 	console.log('Message:', test);
 	res.status(200).send({ test: test });
+});
+
+app.post('/api/calc', async (req, res) => {
+	// example code for how to use the calcFn.js file
+	const cord1 = req.body.cord1;
+	const cord2 = req.body.cord2;
+	const cord3 = req.body.cord3;
+	const cord4 = req.body.cord4;
+	console.log('cord1:', cord1);
+	console.log('cord2:', cord2);
+	console.log('cord3:', cord3);
+	console.log('cord4:', cord4);
+	const distance = await calc.calcDistance(cord1, cord2, cord3, cord4);
+	const shortDistance = Math.floor(distance);
+	console.log(`Distance(decimal): ${distance}km`);
+	console.log(`Distance: ${shortDistance}km`);
+	res.status(200).send({ distance: distance });
 });
 
 // Configuration for the server
