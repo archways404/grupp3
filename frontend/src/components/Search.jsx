@@ -30,7 +30,8 @@ function Search(props) {
 				toast.success(`Message recieved! ${testData}`, {
 					position: toast.POSITION.TOP_CENTER,
 				});
-				onDisplaySearchChange(false);
+				// reutrn value to parent
+				onDisplaySearchChange({ display: false, searchValue: searchValue });
 			}
 		} catch (err) {
 			console.log(err);

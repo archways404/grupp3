@@ -30,7 +30,7 @@ function Location(props) {
 		maximumAge: 0,
 	};
 
-	useEffect(() => {
+	const fetchLocation = () => {
 		if (navigator.geolocation) {
 			navigator.permissions
 				.query({ name: 'geolocation' })
@@ -50,7 +50,7 @@ function Location(props) {
 		} else {
 			console.log('Geolocation is not supported by this browser.');
 		}
-	}, []);
+	};
 
 	const handleChangeLocation = (event) => {
 		setLocation(event.target.value);
@@ -76,6 +76,7 @@ function Location(props) {
 				toast.success(`Message recieved! ${testData}`, {
 					position: toast.POSITION.TOP_CENTER,
 				});
+				// reutrn value to parent
 				onDisplayLocationChange(false);
 			}
 		} catch (err) {
@@ -121,6 +122,11 @@ function Location(props) {
 						type="submit"
 						className="bg-green-500 hover:bg-green-600 text-black py-2 px-4 rounded">
 						Next
+					</button>
+					<button
+						className="bg-green-500 hover:bg-green-600 text-black py-2 px-4 rounded"
+						onClick={fetchLocation}>
+						Fetch Location
 					</button>
 				</form>
 			</div>

@@ -25,13 +25,19 @@ function Main() {
 		}
 	}
 
-	function handleDisplaySearchChange(newValue) {
+  function handleDisplaySearchChange(newValue) {
+		console.log('newValue: ', newValue);
+		console.log('newValue.display: ', newValue.display);
+		console.log('newValue.searchValue: ', newValue.searchValue);
+
+		/*
 		console.log('newValue: ', newValue);
 		if (newValue === false) {
 			setDisplayLocation(false);
 		} else {
 			setDisplayLocation(true);
 		}
+    */
 	}
 
 	const contextClass = {
