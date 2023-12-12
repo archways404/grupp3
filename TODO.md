@@ -1,4 +1,23 @@
-*** Location Page: ***
+## TODO LIST
+
+***Namn:***
+- test
+- test
+- test
+- test
+- test
+
+Skriv namn och vilken del ni vill pröva och jobba med :D
+
+## Items QRF
+
+- ***Location Page***
+- ***Search Page***
+- ***Products Page (Not quite ready yet)***
+
+## TODO
+
+***1. Location Page:***
 
 ```javascript
 
