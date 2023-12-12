@@ -7,7 +7,6 @@ function Location(props) {
 	// Values
 	const [location, setLocation] = useState('');
 	const [cordinates, setCordinates] = useState({});
-
 	const [displayLocation, setDisplayLocation] = useState(true);
 
 	function success(pos) {
@@ -16,6 +15,8 @@ function Location(props) {
 		console.log('Your current position is:');
 		console.log(`Latitude : ${crd.latitude}`);
 		console.log(`Longitude: ${crd.longitude}`);
+		sessionStorage.setItem('latitude', crd.latitude);
+		sessionStorage.setItem('longitude', crd.longitude);
 		setCordinates({ latitude: crd.latitude, longitude: crd.longitude });
 		setDisplayLocation(false);
 	}
@@ -26,7 +27,7 @@ function Location(props) {
 
 	var options = {
 		enableHighAccuracy: true,
-		timeout: 5000,
+		timeout: 30000,
 		maximumAge: 0,
 	};
 

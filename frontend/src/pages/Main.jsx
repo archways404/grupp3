@@ -5,30 +5,36 @@ import 'react-toastify/dist/ReactToastify.css';
 
 import Location from '../components/Location';
 import Search from '../components/Search';
+import Products from '../components/Products';
 
 function Main() {
 	// Rendering
 	const [displayLocation, setDisplayLocation] = useState(true);
 	const [displaySearch, setDisplaySearch] = useState(false);
 
-	function handleDisplayLocationChange(newValue) {
-		console.log('newValue: ', newValue);
-		if (newValue === false) {
+	function handleDisplayLocationChange(Location) {
+		console.log('Location: ', Location);
+		if (Location === false) {
 			setDisplayLocation(false);
+			setDisplaySearch(true);
 		} else {
 			setDisplayLocation(true);
 		}
 	}
 
-	function handleDisplaySearchChange(newValue) {
-		console.log('newValue: ', newValue);
-		console.log('newValue.display: ', newValue.display);
-		console.log('newValue.searchValue: ', newValue.searchValue);
-		if (newValue.display === false) {
-			setDisplayLocation(false);
+	function handleDisplaySearchChange(Search) {
+		console.log('Search: ', Search);
+		console.log('Search.display: ', Search.display);
+		console.log('Search.searchValue: ', Search.searchValue);
+		if (Search.display === false) {
+			setDisplaySearch(false);
 		} else {
 			setDisplayLocation(true);
 		}
+	}
+
+	function handleDisplayProductsChange(newValue) {
+		console.log('newValue: ', newValue);
 	}
 
 	const contextClass = {
@@ -54,8 +60,11 @@ function Main() {
 			{displayLocation && (
 				<Location onDisplayLocationChange={handleDisplayLocationChange} />
 			)}
-			{!displayLocation && (
+			{displaySearch && (
 				<Search onDisplaySearchChange={handleDisplaySearchChange} />
+			)}
+			{!displaySearch && (
+				<Search onDisplayProductsChange={handleDisplayProductsChange} />
 			)}
 		</>
 	);

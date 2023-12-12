@@ -3,11 +3,11 @@ import { useState, useEffect } from 'react';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
-function Search(props) {
+function Products(props) {
 	// Values
 	const [searchValue, setSearchValue] = useState('');
 
-	const { onDisplaySearchChange } = props; // Destructure the prop
+	const { onDisplayProductsChange } = props; // Destructure the prop
 
 	const handleChangeSearch = (event) => {
 		setSearchValue(event.target.value);
@@ -30,8 +30,6 @@ function Search(props) {
 				toast.success(`Message recieved! ${testData}`, {
 					position: toast.POSITION.TOP_CENTER,
 				});
-				// Save search value to session storage
-				sessionStorage.setItem('searchValue', searchValue);
 				// reutrn value to parent
 				onDisplaySearchChange({ display: false, searchValue: searchValue });
 			}
@@ -99,4 +97,4 @@ function Search(props) {
 	);
 }
 
-export default Search;
+export default Products;
