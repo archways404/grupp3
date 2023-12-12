@@ -87,7 +87,7 @@ function Search(props) {
 						Search
 					</button>
 					<button
-						onClick={() => setDisplayLocation(true)}
+						onClick={() => onDisplaySearchChange({ display: true })}
 						className="bg-red-500 hover:bg-red-600 text-black py-2 px-4 rounded">
 						Back
 					</button>

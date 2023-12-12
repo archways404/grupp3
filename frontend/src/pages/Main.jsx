@@ -7,11 +7,6 @@ import Location from '../components/Location';
 import Search from '../components/Search';
 
 function Main() {
-	// Values
-	const [location, setLocation] = useState('');
-	const [cordinates, setCordinates] = useState({});
-	const [searchValue, setSearchValue] = useState('');
-
 	// Rendering
 	const [displayLocation, setDisplayLocation] = useState(true);
 	const [displaySearch, setDisplaySearch] = useState(false);
@@ -25,19 +20,15 @@ function Main() {
 		}
 	}
 
-  function handleDisplaySearchChange(newValue) {
+	function handleDisplaySearchChange(newValue) {
 		console.log('newValue: ', newValue);
 		console.log('newValue.display: ', newValue.display);
 		console.log('newValue.searchValue: ', newValue.searchValue);
-
-		/*
-		console.log('newValue: ', newValue);
-		if (newValue === false) {
+		if (newValue.display === false) {
 			setDisplayLocation(false);
 		} else {
 			setDisplayLocation(true);
 		}
-    */
 	}
 
 	const contextClass = {
