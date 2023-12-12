@@ -1,14 +1,43 @@
 /* eslint-disable no-unused-vars */
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
-function App() {
-	const [testText, setTestText] = useState('');
-	const [msgText, setMsgText] = useState('');
+function Search(props) {
+	// Values
+	const [searchValue, setSearchValue] = useState('');
 
-	const handleChangeText = (event) => {
-		setTestText(event.target.value);
+	const { onDisplaySearchChange } = props; // Destructure the prop
+
+	const handleChangeSearch = (event) => {
+		setSearchValue(event.target.value);
+	};
+
+	const handleSearchSubmit = async (e) => {
+		e.preventDefault(); // Prevent default form submission behavior
+		try {
+			const response = await fetch('http://localhost:9999/api/test/', {
+				method: 'POST',
+				headers: {
+					'Content-Type': 'application/json',
+				},
+				body: JSON.stringify({ test: searchValue }),
+			});
+			if (response.status === 200) {
+				const data = await response.json();
+				const testData = data.test;
+				console.log(data.test);
+				toast.success(`Message recieved! ${testData}`, {
+					position: toast.POSITION.TOP_CENTER,
+				});
+				onDisplaySearchChange(false);
+			}
+		} catch (err) {
+			console.log(err);
+			toast.error(`Response from backend: \n ${err}`, {
+				position: toast.POSITION.TOP_CENTER,
+			});
+		}
 	};
 
 	const contextClass = {
@@ -20,35 +49,17 @@ function App() {
 		dark: 'bg-white-600 font-gray-300',
 	};
 
-	const handleSubmit = async (e) => {
-		e.preventDefault(); // Prevent default form submission behavior
-		try {
-			const response = await fetch('http://localhost:9999/api/test/', {
-				method: 'POST',
-				headers: {
-					'Content-Type': 'application/json',
-				},
-				body: JSON.stringify({ test: testText }),
-			});
-			if (response.status === 200) {
-				const data = await response.json();
-				const testData = data.test;
-				console.log(data.test);
-				setMsgText(testData);
-				toast.success(`Response from backend: ${testData}`, {
-					position: toast.POSITION.TOP_CENTER,
-				});
-			}
-		} catch (err) {
-			console.log(err);
-			toast.error(`Response from backend: \n ${err}`, {
-				position: toast.POSITION.TOP_CENTER,
-			});
-		}
-	};
-
 	return (
 		<>
+			<ToastContainer
+				toastClassName={({ type }) =>
+					contextClass[type || 'dark'] +
+					' relative flex p-1 min-h-10 rounded-md justify-between overflow-hidden cursor-pointer'
+				}
+				bodyClassName={() => 'text-sm font-white font-med block p-3'}
+				position="bottom-left"
+				autoClose={3000}
+			/>
 			<div className="flex justify-center items-center h-screen bg-slate-700">
 				<ToastContainer
 					toastClassName={({ type }) =>
@@ -60,20 +71,24 @@ function App() {
 					autoClose={3000}
 				/>
 				<form
-					onSubmit={handleSubmit}
+					onSubmit={handleSearchSubmit}
 					className="flex flex-col items-center space-y-4">
 					<input
 						className="w-64 h-12 px-4 rounded-md bg-slate-800 text-gray-200"
-						placeholder="text -> backend"
+						placeholder="Search for beers"
 						type="text"
-						value={testText}
-						onChange={handleChangeText}
+						value={searchValue}
+						onChange={handleChangeSearch}
 					/>
-					<br></br>
 					<button
 						type="submit"
-						className="bg-green-500 hover:bg-green-600 text-white py-2 px-4 rounded">
-						Send to backend
+						className="bg-green-500 hover:bg-green-600 text-black py-2 px-4 rounded">
+						Search
+					</button>
+					<button
+						onClick={() => setDisplayLocation(true)}
+						className="bg-red-500 hover:bg-red-600 text-black py-2 px-4 rounded">
+						Back
 					</button>
 				</form>
 			</div>
@@ -81,4 +96,4 @@ function App() {
 	);
 }
 
-export default App;
+export default Search;
