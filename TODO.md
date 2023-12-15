@@ -11,43 +11,228 @@ Skriv namn och vilken del ni vill pröva och jobba med :D
 
 ## Items QRF
 
+Competed items - [X]
+Non-Completed items - []
+
 - ***Location Page***
-- ***Search Page***
+
+	- Backend:
+		- Byte av POST Endpoint - []                
+		- Byta namn på variabeln som skickas - []    
+		- Byta namn på variabeln som tas emot - []
+		- Skapa en fil för logiken - []
+		- Definiera logiken - []    
+	- Frontend:
+		- Byte av POST Endpoint - []                
+		- Byta namn på variabeln som skickas - []    
+		- Byta namn på variabeln som tas emot & spara till sessionStorage - []
+
+- ***Search***
+
+	- Backend:
+		- Byte av POST Endpoint
+		- Byta namn på variabeln som skickas
+		- Byta namn på variabeln som tas emot
+		- Skapa en fil för logiken
+		- Definiera logiken 
+	- Frontend:
+		- Byte av POST Endpoint - []                
+		- Byta namn på variabeln som skickas - []    
+		- Byta namn på variabeln som tas emot & spara till sessionStorage - []
+
 - ***Products Page (Not quite ready yet)***
 
-## TODO
 
-***1. Location Page:***
+## Location
 
+### ***backend***
+
+#### ***/backend/dev.js:***
+
+Summary:
+- Byte av POST Endpoint
+- Byta namn på variabeln som skickas
+- Byta namn på variabeln som tas emot
+- Skapa en fil för logiken
+- Definiera logiken
+
+Base:
 ```javascript
-
 app.post('/api/test', async (req, res) => {
 	const test = req.body.test;
 	console.log('Message:', test);
 	res.status(200).send({ test: test });
 });
-
 ```
 
-- Byta POST URL (från /api/test till ex: /api/getLocation) -> både i backend och frontend
+*****Byte av POST Endpoint:*****
 
-- Byta namn på variabeln som skickas (Location.jsx) -> body: JSON.stringify({ test: location }) till ex: body: JSON.stringify({ location: location }),
+Från:
+```javascript
+/api/test
+```
+Till ex:
+```javascript
+/api/location
+```
 
-- Samma ändring måste ske i backend (req.body.location i detta fallet)
+*****Byta namn på variabeln som skickas*****
 
-- Skapa en ny fil i functions och definera logik för att hämta kordinaterna (logiken finns i /tests/test.js)
+Från:
+```javascript
+res.status(200).send({ test: test });
+```
+Till ex:
+```javascript
+res.status(200).send({ cordinates: cordinates });
+```
 
-- Använd funktionerna som du har definierat (glöm ej att importera functions/ filen)
+*****Byta namn på variabeln som tas emot*****
 
-- Skicka den nya parsade datan som har kordinaterna (tips är att göra det i följande format): locationData: { lon: lon, lat: lat}
+Från:
+```javascript
+const test = req.body.test;
+```
+Till ex:
+```javascript
+const location = req.body.location;
+```
 
-- Spara den nya datan i location.jsx med sessionStorage:         sessionStorage.setItem('lon', locationData.lon);                      sessionStorage.setItem('lat', locationData.lat);
+*****Skapa en fil för logiken*****
 
+Path:
+```javascript
+backend
+- functions
+  - yourfile.js
+```
 
-*** Search Page: ***
+*****Definiera logiken för att konvertera stad / address till kordinater*****
+
+Code:
 
 ```javascript
+async function getCoordinates(address) {
+	const url = `https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(
+		address
+	)}`;
+	try {
+		const response = await fetch(url);
+		const data = await response.json();
+		if (data.length > 0) {
+			const returnObject = {
+				latitude: data[0].lat,
+				longitude: data[0].lon,
+			};
+			return returnObject;
+			//return { latitude: data[0].lat, longitude: data[0].lon };
+		} else {
+			return null;
+		}
+	} catch (error) {
+		console.error(error);
+		return null;
+	}
+}
+```
 
+### ***frontend***
+
+#### ***/frontend/src/compontents/Location.jsx:***
+
+Base:
+```javascript
+const handleLocationSubmit = async (e) => {
+	e.preventDefault(); // Prevent default form submission behavior
+	try {
+	const response = await fetch('http://localhost:9999/api/test/', {
+		method: 'POST',
+		headers: {
+			'Content-Type': 'application/json',
+		},
+		body: JSON.stringify({ test: location }),
+	});
+	if (response.status === 200) {
+		const data = await response.json();
+		const testData = data.test;
+		setDisplayLocation(false);
+		console.log(data.test);
+		toast.success(`Message recieved! ${testData}`, {
+			position: toast.POSITION.TOP_CENTER,
+		});
+		// reutrn value to parent
+		onDisplayLocationChange(false);
+	}
+	} catch (err) {
+	console.log(err);
+	toast.error(`Response from backend: \n ${err}`, {
+		position: toast.POSITION.TOP_CENTER,
+	});
+	}
+};
+```
+
+*****Byte av POST Endpoint:*****
+
+Från:
+```javascript
+const response = await fetch('http://localhost:9999/api/test/', {
+```
+Till samma som backend, ex:
+```javascript
+const response = await fetch('http://localhost:9999/api/location/', {
+```
+
+*****Byta namn på variabeln som skickas*****
+
+Från:
+```javascript
+body: JSON.stringify({ test: location })
+```
+Till ex:
+```javascript
+body: JSON.stringify({ location: location })
+```
+
+*****Byta namn på variabeln som tas emot & spara till sessionStorage*****
+
+Från:
+```javascript
+const data = await response.json();
+const testData = data.test;
+```
+Till ex:
+```javascript
+const data = await response.json();
+sessionStorage.setItem('latitude', data.latitude);
+sessionStorage.setItem('longitude', data.longitude);
+```
+
+
+## Search
+
+### ***/backend/dev.js***
+
+Summary:
+- Byte av POST Endpoint
+- Byta namn på variabeln som skickas
+- Byta namn på variabeln som tas emot
+- Skapa en fil för logiken
+- Definiera logiken
+
+*****Skapa en fil för logiken*****
+
+Path:
+```javascript
+backend
+- functions
+  - yourfile.js
+```
+
+*****Hämta in datan från databasen:*****
+
+Code:
+```javascript
 async function viewDatabaseContents() {
 	try {
 		const allData = await ProductArray.find();
@@ -56,26 +241,22 @@ async function viewDatabaseContents() {
 		console.error('Error fetching data from the database:', err);
 	}
 }
-
 ```
-Kod för databas (finns i dbtest.js)
 
-- Skicka sökvärdet till ny endpoint (kan vara get) -> nuvarande postar den till /api/test så byta det
+*****Hantera datan*****
 
-- Skapa en ny logic fil för att hantera och filtrera datan
+- Skapa en funktion som returnar allt från databasen (obs formattering kan behövas)
+- Skapa en funktion som gör så att du kan söka om där finns någon matchning och isåfall returnera en eller flera, annars returnera 404.
 
-- Skapa funktioner för att hämta data från databasen, parsa den och söka igenom datan
+Formattering & mapping ex finns i /tests/
 
-- Två huvudfunktioner (om värdet som kommer från frontend är ex "alla", ska den returna alla värdena från databasen, parsade såklart), annars ska den söka och se om den hittar en produkt eller så som har namnet. Om inga värden hittas kan man returna alla värdena, samt ett litet meddelande kanske? Eller ett 404?
+Mall för hur datan ska returneras:
 
-- I frontend så behöver vi returnera värdena vi får till Main.jsx (se Location.jsx eller Search.jsx).
-
-Vi måste få ut:
-
-- namn
-- pris
-- img (bild)
-- prod_id
-
-- I Main.jsx skicka in det värdet eller värdena till "products" där products är en mall som behöver data (kan gå igenom det lite senare när vi är där).
-
+```JSON
+data: {
+	text: text,
+	img: img,
+	price: price,
+	prod_id: prod_id
+}
+```
