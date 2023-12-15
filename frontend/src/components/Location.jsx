@@ -62,19 +62,19 @@ function Location(props) {
 	const handleLocationSubmit = async (e) => {
 		e.preventDefault(); // Prevent default form submission behavior
 		try {
-			const response = await fetch('http://localhost:9999/api/test/', {
+			const response = await fetch('http://localhost:9999/api/location/', {
 				method: 'POST',
 				headers: {
 					'Content-Type': 'application/json',
 				},
-				body: JSON.stringify({ test: location }),
+				body: JSON.stringify({ location: location }),
 			});
 			if (response.status === 200) {
 				const data = await response.json();
-				const testData = data.test;
+				const locationData = data.location;
 				setDisplayLocation(false);
-				console.log(data.test);
-				toast.success(`Message recieved! ${testData}`, {
+				console.log(data.location);
+				toast.success(`Your location: ${locationData}`, {
 					position: toast.POSITION.TOP_CENTER,
 				});
 				// reutrn value to parent
