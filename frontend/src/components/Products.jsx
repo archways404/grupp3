@@ -5,7 +5,17 @@ import 'react-toastify/dist/ReactToastify.css';
 
 function Products(props) {
 	// Values
+	const [products, setProducts] = useState([]);
 	const { onDisplayProductsChange } = props; // Destructure the prop
+
+	useEffect(() => {
+		// Retrieve and parse the data from sessionStorage
+		const searchResults = sessionStorage.getItem('searchResults');
+		if (searchResults) {
+			const data = JSON.parse(searchResults);
+			setProducts(data.updatedProducts);
+		}
+	}, []);
 
 	const contextClass = {
 		success: 'bg-green-700',
@@ -37,6 +47,23 @@ function Products(props) {
 					position="bottom-left"
 					autoClose={3000}
 				/>
+				<div className="product-cards-container">
+					{products.map((product) => (
+						<div
+							key={product.prod_id}
+							className="card">
+							<img
+								src={product.img}
+								alt={product.title}
+								className="card-img"
+							/>
+							<div className="card-body">
+								<h5 className="card-title">{product.title}</h5>
+								<p className="card-price">${product.price}</p>
+							</div>
+						</div>
+					))}
+				</div>
 			</div>
 		</>
 	);
