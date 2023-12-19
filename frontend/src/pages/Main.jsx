@@ -29,13 +29,20 @@ function Main() {
 		console.log('Search.searchValue: ', Search.searchValue);
 		if (Search.display === false) {
 			setDisplaySearch(false);
+			setDisplayProducts(true);
 		} else {
 			setDisplayLocation(true);
 		}
 	}
 
-	function handleDisplayProductsChange(newValue) {
-		console.log('newValue: ', newValue);
+	function handleDisplayProductsChange(Product) {
+		console.log('Search: ', Product);
+		console.log('Search.display: ', Product.display);
+		if (Product.display === false) {
+			setDisplayProducts(false);
+		} else {
+			setDisplayLocation(true);
+		}
 	}
 
 	const contextClass = {
@@ -64,8 +71,8 @@ function Main() {
 			{displaySearch && (
 				<Search onDisplaySearchChange={handleDisplaySearchChange} />
 			)}
-			{!displaySearch && (
-				<Search onDisplayProductsChange={handleDisplayProductsChange} />
+			{displayProducts && (
+				<Products onDisplayProductsChange={handleDisplayProductsChange} />
 			)}
 		</>
 	);

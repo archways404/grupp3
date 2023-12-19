@@ -51,10 +51,8 @@ app.post('/api/sendLocation', async (req, res) => {
 app.post('/api/Search', async (req, res) => {
 	const searchValue = req.body.searchValue;
 	console.log('searchValue:', searchValue);
-
 	const exchangeRate = await currencyFn.getConverstionRateToUSD();
 	console.log('exchangeRate:', exchangeRate);
-
 	const products = await searchFn.convertProducts();
 
 	if (searchValue === '') {
@@ -62,7 +60,7 @@ app.post('/api/Search', async (req, res) => {
 		console.log(updatedProducts);
 		res.status(200).send({ updatedProducts: products });
 	} else {
-		const product_name = await searchFn.getProductByName(products, searchValue);
+		const product_name = searchFn.getProductByName(products, searchValue);
 		console.log('getProductByName', product_name);
 
 		const updatedProducts = await searchFn.convertPrice(

@@ -5,41 +5,7 @@ import 'react-toastify/dist/ReactToastify.css';
 
 function Products(props) {
 	// Values
-	const [searchValue, setSearchValue] = useState('');
-
 	const { onDisplayProductsChange } = props; // Destructure the prop
-
-	const handleChangeSearch = (event) => {
-		setSearchValue(event.target.value);
-	};
-
-	const handleSearchSubmit = async (e) => {
-		e.preventDefault(); // Prevent default form submission behavior
-		try {
-			const response = await fetch('http://localhost:9999/api/test/', {
-				method: 'POST',
-				headers: {
-					'Content-Type': 'application/json',
-				},
-				body: JSON.stringify({ test: searchValue }),
-			});
-			if (response.status === 200) {
-				const data = await response.json();
-				const testData = data.test;
-				console.log(data.test);
-				toast.success(`Message recieved! ${testData}`, {
-					position: toast.POSITION.TOP_CENTER,
-				});
-				// reutrn value to parent
-				onDisplaySearchChange({ display: false, searchValue: searchValue });
-			}
-		} catch (err) {
-			console.log(err);
-			toast.error(`Response from backend: \n ${err}`, {
-				position: toast.POSITION.TOP_CENTER,
-			});
-		}
-	};
 
 	const contextClass = {
 		success: 'bg-green-700',
@@ -71,27 +37,6 @@ function Products(props) {
 					position="bottom-left"
 					autoClose={3000}
 				/>
-				<form
-					onSubmit={handleSearchSubmit}
-					className="flex flex-col items-center space-y-4">
-					<input
-						className="w-64 h-12 px-4 rounded-md bg-slate-800 text-gray-200"
-						placeholder="Search for beers"
-						type="text"
-						value={searchValue}
-						onChange={handleChangeSearch}
-					/>
-					<button
-						type="submit"
-						className="bg-green-500 hover:bg-green-600 text-black py-2 px-4 rounded">
-						Search
-					</button>
-					<button
-						onClick={() => onDisplaySearchChange({ display: true })}
-						className="bg-red-500 hover:bg-red-600 text-black py-2 px-4 rounded">
-						Back
-					</button>
-				</form>
 			</div>
 		</>
 	);

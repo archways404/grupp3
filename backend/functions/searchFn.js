@@ -46,10 +46,11 @@ function getProductById(products, product_id) {
 }
 
 function getProductByName(products, product_name) {
-	const uniqueProducts = products.filter((product) => {
-		return product.title === product_name;
+	const searchQuery = product_name.toLowerCase();
+	const similarProducts = products.filter((product) => {
+		return product.title.toLowerCase().includes(searchQuery);
 	});
-	return uniqueProducts;
+	return similarProducts;
 }
 
 async function convertProducts() {
