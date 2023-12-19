@@ -16,22 +16,22 @@ function Search(props) {
 	const handleSearchSubmit = async (e) => {
 		e.preventDefault(); // Prevent default form submission behavior
 		try {
-			const response = await fetch('http://localhost:9999/api/test/', {
+			const response = await fetch('http://localhost:9999/api/Search/', {
 				method: 'POST',
 				headers: {
 					'Content-Type': 'application/json',
 				},
-				body: JSON.stringify({ test: searchValue }),
+				body: JSON.stringify({ searchValue: searchValue }),
 			});
 			if (response.status === 200) {
 				const data = await response.json();
-				const testData = data.test;
-				console.log(data.test);
-				toast.success(`Message recieved! ${testData}`, {
+				console.log(JSON.stringify(data));
+				toast.success(`Message recieved! ${data}`, {
 					position: toast.POSITION.TOP_CENTER,
 				});
 				// Save search value to session storage
 				sessionStorage.setItem('searchValue', searchValue);
+				sessionStorage.setItem('searchResults', JSON.stringify(data));
 				// reutrn value to parent
 				onDisplaySearchChange({ display: false, searchValue: searchValue });
 			}

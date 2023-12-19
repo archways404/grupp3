@@ -10,7 +10,8 @@ import Products from '../components/Products';
 function Main() {
 	// Rendering
 	const [displayLocation, setDisplayLocation] = useState(true);
-	const [displaySearch, setDisplaySearch] = useState(false);
+  const [displaySearch, setDisplaySearch] = useState(false);
+	const [displayProducts, setDisplayProducts] = useState(false);
 
 	function handleDisplayLocationChange(Location) {
 		console.log('Location: ', Location);
