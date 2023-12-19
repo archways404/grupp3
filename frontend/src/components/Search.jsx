@@ -25,7 +25,7 @@ function Search(props) {
 			});
 			if (response.status === 200) {
 				const data = await response.json();
-				console.log(JSON.stringify(data));
+				console.log(data.updatedProducts);
 				toast.success(`Message recieved! ${data}`, {
 					position: toast.POSITION.TOP_CENTER,
 				});

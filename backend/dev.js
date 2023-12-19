@@ -57,16 +57,18 @@ app.post('/api/Search', async (req, res) => {
 
 	const products = await searchFn.convertProducts();
 
-	if (searchValue === null) {
+	if (searchValue === '') {
 		const updatedProducts = searchFn.convertPrice(products, exchangeRate);
 		console.log(updatedProducts);
-
 		res.status(200).send({ updatedProducts: products });
 	} else {
-		const product_name = searchFn.getProductByName(products, searchValue);
-		console.log(product_name);
+		const product_name = await searchFn.getProductByName(products, searchValue);
+		console.log('getProductByName', product_name);
 
-		const updatedProducts = searchFn.convertPrice(product_name, exchangeRate);
+		const updatedProducts = await searchFn.convertPrice(
+			product_name,
+			exchangeRate
+		);
 		console.log(updatedProducts);
 
 		res.status(200).send({ updatedProducts: updatedProducts });
