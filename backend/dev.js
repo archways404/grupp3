@@ -73,6 +73,39 @@ app.post('/api/Search', async (req, res) => {
 	}
 });
 
+//? TESTCASE
+app.post('/api/Testcase', async (req, res) => {
+	testData = [
+		{
+			prod_id: '105017',
+			title: 'royal classic',
+			img: 'https://image.prod.iposeninfra.com/bilkaimg.php?pid=105017&imgType=jpeg',
+			price: '13.45',
+		},
+		{
+			prod_id: '91362',
+			title: 'royal classic',
+			img: 'https://image.prod.iposeninfra.com/bilkaimg.php?pid=91362&imgType=jpeg',
+			price: '10.84',
+		},
+		{
+			prod_id: '29508',
+			title: 'royal classic',
+			img: 'https://image.prod.iposeninfra.com/bilkaimg.php?pid=29508&imgType=jpeg',
+			price: '1.03',
+		},
+		{
+			prod_id: '30251',
+			title: 'royal classic',
+			img: 'https://image.prod.iposeninfra.com/bilkaimg.php?pid=30251&imgType=jpeg',
+			price: '2.92',
+		},
+	];
+	res.status(200).send({ testData: testData });
+});
+//? TESTCASE
+
+//! TO BE REMOVED
 app.post('/api/calc', async (req, res) => {
 	// example code for how to use the calcFn.js file
 	const cord1 = req.body.cord1;
@@ -89,6 +122,7 @@ app.post('/api/calc', async (req, res) => {
 	console.log(`Distance: ${shortDistance}km`);
 	res.status(200).send({ distance: distance });
 });
+//! TO BE REMOVED
 
 // Configuration for the server
 http.createServer(app).listen(port, () => {
