@@ -55,7 +55,6 @@ function Search(props) {
 					'localCurrencyCode',
 					JSON.stringify(data.currencyCode)
 				);
-				sessionStorage.setItem('allRates', JSON.stringify(data.allRates));
 				// reutrn value to parent
 				onDisplaySearchChange({ display: false, searchValue: searchValue });
 			}

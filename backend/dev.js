@@ -89,6 +89,7 @@ app.post('/api/Search', async (req, res) => {
 				updatedProducts: updatedProducts,
 				exchangeRate: exchangeRateSpecifics,
 				currencyCode: currencyCode,
+				allRates: exchangerates,
 			});
 		} else {
 			const products = await searchFn.convertProducts();

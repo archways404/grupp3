@@ -16,12 +16,7 @@ function Products(props) {
 		const searchResults = sessionStorage.getItem('searchResults');
 		if (searchResults) {
 			const data = JSON.parse(searchResults);
-			setProducts(data.updatedProducts);
-		}
-
-		const allRates = sessionStorage.getItem('allRates');
-		if (allRates) {
-			const data = JSON.parse(allRates);
+      setProducts(data.updatedProducts);
 			setAllRates(data.allRates);
 		}
 
