@@ -112,9 +112,25 @@ function Products(props) {
 								<h5 className="card-title text-lg font-semibold truncate">
 									{product.title}
 								</h5>
+
 								<p className="card-price text-xl font-bold">
 									{(product.price * exchangeRate).toFixed(2)} {currencyCode}
 								</p>
+								<button
+									className={`p-2 text-white font-bold rounded ${
+										selectedProducts.some((p) => p.prod_id === product.prod_id)
+											? 'bg-red-500'
+											: 'bg-green-500'
+									}`}
+									onClick={() => {
+										selectedProducts.some((p) => p.prod_id === product.prod_id)
+											? handleRemoveProduct(product.prod_id)
+											: handleAddProduct(product);
+									}}>
+									{selectedProducts.some((p) => p.prod_id === product.prod_id)
+										? 'Remove'
+										: 'Add to Cart'}
+								</button>
 							</div>
 						</div>
 					))}
