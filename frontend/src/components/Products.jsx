@@ -15,7 +15,7 @@ function Products(props) {
 			const data = JSON.parse(searchResults);
 			setProducts(data.updatedProducts);
 		}
-	}, []);
+  }, []);
 
 	const contextClass = {
 		success: 'bg-green-700',

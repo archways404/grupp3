@@ -15,13 +15,28 @@ function Search(props) {
 
 	const handleSearchSubmit = async (e) => {
 		e.preventDefault(); // Prevent default form submission behavior
-		try {
+    try {
+			const cord_long = sessionStorage.getItem('longitude');
+			const cord_lat = sessionStorage.getItem('latitude');
+			console.log(
+				'🚀 ~ file: Search.jsx:20 ~ handleSearchSubmit ~ cord_long:',
+				cord_long
+			);
+			console.log(
+				'🚀 ~ file: Search.jsx:22 ~ handleSearchSubmit ~ cord_lat:',
+				cord_lat
+			);
+
 			const response = await fetch('http://localhost:9999/api/Search/', {
 				method: 'POST',
 				headers: {
 					'Content-Type': 'application/json',
 				},
-				body: JSON.stringify({ searchValue: searchValue }),
+				body: JSON.stringify({
+					searchValue: searchValue,
+					cord_long: cord_long,
+					cord_lat: cord_lat,
+				}),
 			});
 			if (response.status === 200) {
 				const data = await response.json();
