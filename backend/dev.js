@@ -77,20 +77,18 @@ app.post('/api/Search', async (req, res) => {
 		const currencies = cc[0].currencies;
 		const currencyCode = Object.keys(currencies)[0];
 		const exchangerates = await currencyFn.getExchangeRates();
-		const exchangeRateSpecifics = exchangerates[currencyCode];
-		const exchangeRate = await currencyFn.getConverstionRateToUSD();
+    const exchangeRateSpecifics = exchangerates[currencyCode];
 
+		const exchangeRate = await currencyFn.getConverstionRateToUSD();
 		console.log('exchangeRate:', exchangeRate);
 		if (searchValue === '') {
 			const products = await searchFn.convertProducts();
-			const updatedProducts = searchFn.convertPrice(
-				products,
-				exchangeRateSpecifics
-			);
-
+			const updatedProducts = searchFn.convertPrice(products, exchangeRate);
 			console.log(updatedProducts);
 			res.status(200).send({
 				updatedProducts: updatedProducts,
+				exchangeRate: exchangeRateSpecifics,
+				currencyCode: currencyCode,
 			});
 		} else {
 			const products = await searchFn.convertProducts();
@@ -98,11 +96,14 @@ app.post('/api/Search', async (req, res) => {
 			console.log('getProductByName', product_name);
 			const updatedProducts = await searchFn.convertPrice(
 				product_name,
-				exchangeRateSpecifics
+				exchangeRate
 			);
 			console.log(updatedProducts);
 			res.status(200).send({
 				updatedProducts: updatedProducts,
+				exchangeRate: exchangeRateSpecifics,
+				currencyCode: currencyCode,
+				allRates: exchangerates,
 			});
 		}
 	} catch (error) {

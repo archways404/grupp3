@@ -46,7 +46,16 @@ function Search(props) {
 				});
 				// Save search value to session storage
 				sessionStorage.setItem('searchValue', searchValue);
-				sessionStorage.setItem('searchResults', JSON.stringify(data));
+        sessionStorage.setItem('searchResults', JSON.stringify(data));
+        sessionStorage.setItem(
+					'localExchangeRate',
+					JSON.stringify(data.exchangeRate)
+				);
+				sessionStorage.setItem(
+					'localCurrencyCode',
+					JSON.stringify(data.currencyCode)
+				);
+				sessionStorage.setItem('allRates', JSON.stringify(data.allRates));
 				// reutrn value to parent
 				onDisplaySearchChange({ display: false, searchValue: searchValue });
 			}
