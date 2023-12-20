@@ -24,19 +24,6 @@
 | `process.env.SALLING_BEARER_TOKEN` | `string` | **Required**. Bearer token for authorization|
 
 
-### Nominatim OpenStreetMap
-
-#### Placeholder
-
-```http
-  GET https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(address)}
-```
-
-| Parameter | Type     | Description                |
-| :-------- | :------- | :------------------------- |
-| `address` | `string` | **Required**. The address of the user|
-
-
 ### Free Currency
 
 #### Placeholder
@@ -61,6 +48,31 @@
 | :-------- | :------- | :------------------------- |
 | `address` | `string` | **Required**. The address of the user|
 
+### GeoCode
+
+#### Placeholder
+
+```http
+  GET https://geocode.maps.co/reverse?lat={latitude}&lon={longitude}
+```
+
+| Parameter | Type     | Description                |
+| :-------- | :------- | :------------------------- |
+| `latitude` | `string` | **Required**. The latitude of the user|
+| `longitude` | `string` | **Required**. The longitude of the user|
+
+
+### RestCountries
+
+#### Placeholder
+
+```http
+  GET https://restcountries.com/v3.1/name/${countryName}
+```
+
+| Parameter | Type     | Description                |
+| :-------- | :------- | :------------------------- |
+| `countryName` | `string` | **Required**. The name of the country |
 
 ### SkyScanner
 
