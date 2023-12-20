@@ -50,7 +50,68 @@ app.post('/api/sendLocation', async (req, res) => {
 
 app.post('/api/Search', async (req, res) => {
 	const searchValue = req.body.searchValue;
-	console.log('searchValue:', searchValue);
+	const cord_long = req.body.cord_long;
+	const cord_lat = req.body.cord_lat;
+	try {
+		const response_country = await fetch(
+			`https://geocode.maps.co/reverse?lat=${cord_lat}&lon=${cord_long}`,
+			{
+				method: 'GET',
+				headers: {
+					'Content-Type': 'application/json',
+				},
+			}
+		);
+		const data = await response_country.json();
+		const countryName = data.address.country;
+		const response_cc = await fetch(
+			`https://restcountries.com/v3.1/name/${countryName}`,
+			{
+				method: 'GET',
+				headers: {
+					'Content-Type': 'application/json',
+				},
+			}
+		);
+		const cc = await response_cc.json();
+		const currencies = cc[0].currencies;
+		const currencyCode = Object.keys(currencies)[0];
+		const exchangerates = await currencyFn.getExchangeRates();
+    const exchangeRateSpecifics = exchangerates[currencyCode];
+
+		const exchangeRate = await currencyFn.getConverstionRateToUSD();
+		console.log('exchangeRate:', exchangeRate);
+		if (searchValue === '') {
+			const products = await searchFn.convertProducts();
+			const updatedProducts = searchFn.convertPrice(products, exchangeRate);
+			console.log(updatedProducts);
+			res.status(200).send({
+				updatedProducts: updatedProducts,
+				exchangeRate: exchangeRateSpecifics,
+				currencyCode: currencyCode,
+				allRates: exchangerates,
+			});
+		} else {
+			const products = await searchFn.convertProducts();
+			const product_name = searchFn.getProductByName(products, searchValue);
+			console.log('getProductByName', product_name);
+			const updatedProducts = await searchFn.convertPrice(
+				product_name,
+				exchangeRate
+			);
+			console.log(updatedProducts);
+			res.status(200).send({
+				updatedProducts: updatedProducts,
+				exchangeRate: exchangeRateSpecifics,
+				currencyCode: currencyCode,
+				allRates: exchangerates,
+			});
+		}
+	} catch (error) {
+		console.error(error);
+		return error;
+
+		/*
 	const exchangeRate = await currencyFn.getConverstionRateToUSD();
 	console.log('exchangeRate:', exchangeRate);
 	const products = await searchFn.convertProducts();
@@ -70,6 +131,7 @@ app.post('/api/Search', async (req, res) => {
 		console.log(updatedProducts);
 
 		res.status(200).send({ updatedProducts: updatedProducts });
+  */
 	}
 });
 

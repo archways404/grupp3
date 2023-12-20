@@ -32,8 +32,16 @@ async function convertValueToUSD(itemValue) {
 	return itemValueInUSD;
 }
 
+async function convertValueFromUSD(exchangeRate, itemValue) {
+	const LocalItemValue = itemValue * exchangeRate;
+	console.log(LocalItemValue);
+	// two decimals - not more
+	return LocalItemValue;
+}
+
 module.exports = {
 	getExchangeRates,
 	getConverstionRateToUSD,
 	convertValueToUSD,
+	convertValueFromUSD,
 };
