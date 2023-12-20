@@ -34,6 +34,8 @@ app.use(cors(corsOptions));
 dotenv.config();
 
 // Configuration for the routes
+
+//* Example of how to use a route
 app.post('/api/', async (req, res) => {
 	console.log(req.body);
 	// Example of how to use a function from the functions folder
@@ -135,6 +137,7 @@ app.post('/api/Search', async (req, res) => {
 	}
 });
 
+//? TESTCASE -> REMOVE LATER
 app.post('/api/calc', async (req, res) => {
 	// example code for how to use the calcFn.js file
 	const cord1 = req.body.cord1;
