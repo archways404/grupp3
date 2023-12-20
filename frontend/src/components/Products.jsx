@@ -8,7 +8,8 @@ function Products(props) {
 	const [products, setProducts] = useState([]);
 	const [allRates, setAllRates] = useState({}); // Changed to an object
 	const [exchangeRate, setExchangeRate] = useState('');
-	const [currencyCode, setCurrencyCode] = useState('');
+  const [currencyCode, setCurrencyCode] = useState('');
+	const [selectedProducts, setSelectedProducts] = useState([]);
 	const { onDisplayProductsChange } = props; // Destructure the prop
 
 	useEffect(() => {
@@ -48,6 +49,19 @@ function Products(props) {
 		setExchangeRate(selectedRate || 1); // Fallback to 1 if the rate is not found
 		setCurrencyCode(selectedCurrencyCode);
 	};
+  
+  const handleAddProduct = (product) => {
+		setSelectedProducts((prevSelectedProducts) => [
+			...prevSelectedProducts,
+			product,
+		]);
+	};
+
+	const handleRemoveProduct = (prodId) => {
+		setSelectedProducts((prevSelectedProducts) =>
+			prevSelectedProducts.filter((product) => product.prod_id !== prodId)
+		);
+	};
 
 	return (
 		<>
@@ -60,21 +74,19 @@ function Products(props) {
 				position="bottom-left"
 				autoClose={3000}
 			/>
-			<div className="flex justify-center items-center h-screen bg-slate-700">
-				<ToastContainer
-					toastClassName={({ type }) =>
-						contextClass[type || 'dark'] +
-						' relative flex p-1 min-h-10 rounded-md justify-between overflow-hidden cursor-pointer'
-					}
-					bodyClassName={() => 'text-sm font-white font-med block p-3'}
-					position="bottom-left"
-					autoClose={3000}
-				/>
+			<div className="flex flex-col justify-start items-center pt-10 bg-slate-700 min-h-screen">
 				{/* Currency Dropdown */}
-				<div className="currency-selector">
+				<div className="currency-selector mb-6">
+					<label
+						htmlFor="currency-select"
+						className="text-white mr-2">
+						Choose Currency:
+					</label>
 					<select
+						id="currency-select"
 						onChange={handleCurrencyChange}
-						value={currencyCode}>
+						value={currencyCode}
+						className="p-2 rounded border border-gray-300 bg-white text-black">
 						{Object.keys(allRates).map((code) => (
 							<option
 								key={code}
@@ -84,19 +96,23 @@ function Products(props) {
 						))}
 					</select>
 				</div>
-				<div className="product-cards-container">
+
+				{/* Product Cards Container */}
+				<div className="product-cards-container w-full px-4 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
 					{products.map((product) => (
 						<div
 							key={product.prod_id}
-							className="card">
+							className="card bg-white rounded-lg shadow-lg overflow-hidden max-w-sm">
 							<img
 								src={product.img}
 								alt={product.title}
-								className="card-img"
+								className="card-img object-cover h-48 w-full"
 							/>
-							<div className="card-body">
-								<h5 className="card-title">{product.title}</h5>
-								<p className="card-price">
+							<div className="card-body p-4">
+								<h5 className="card-title text-lg font-semibold truncate">
+									{product.title}
+								</h5>
+								<p className="card-price text-xl font-bold">
 									{(product.price * exchangeRate).toFixed(2)} {currencyCode}
 								</p>
 							</div>
