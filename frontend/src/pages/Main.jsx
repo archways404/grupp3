@@ -7,6 +7,8 @@ import Location from '../components/Location';
 import Search from '../components/Search';
 import Products from '../components/Products';
 import Cart from '../components/Cart';
+import Travel from '../components/Travel';
+import Flight from '../components/Flight';
 
 function Main() {
 	// Rendering
@@ -14,6 +16,8 @@ function Main() {
 	const [displaySearch, setDisplaySearch] = useState(false);
 	const [displayProducts, setDisplayProducts] = useState(false);
 	const [displayCart, setDisplayCart] = useState(false);
+	const [displayTravel, setDisplayTravel] = useState(false);
+	const [displayFlight, setDisplayFlight] = useState(false);
 
 	function handleDisplayLocationChange(Location) {
 		console.log('Location: ', Location);
@@ -49,8 +53,16 @@ function Main() {
 	}
 
 	function handleDisplayCartChange(Cart) {
-		console.log('Search: ', Cart);
-		console.log('Search.display: ', Cart.display);
+		console.log('Cart.displayFlight: ', Cart.displayFlight);
+		console.log('Cart.displayTravel: ', Cart.displayTravel);
+		if (Cart.displayFlight === true) {
+			setDisplayFlight(true);
+			setDisplayTravel(true);
+			setDisplayCart(false);
+		} else {
+			setDisplayTravel(true);
+			setDisplayCart(false);
+		}
 	}
 
 	const contextClass = {
@@ -83,6 +95,12 @@ function Main() {
 				<Products onDisplayProductsChange={handleDisplayProductsChange} />
 			)}
 			{displayCart && <Cart onDisplayCartChange={handleDisplayCartChange} />}
+			{displayTravel && (
+				<Travel onDisplayCartChange={handleDisplayCartChange} />
+			)}
+			{displayFlight && (
+				<Flight onDisplayCartChange={handleDisplayCartChange} />
+			)}
 		</>
 	);
 }
