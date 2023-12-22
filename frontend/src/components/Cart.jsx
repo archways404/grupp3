@@ -9,8 +9,14 @@ function Cart(props) {
 	const [exchangeRate, setExchangeRate] = useState('');
 	const [currencyCode, setCurrencyCode] = useState('');
 	const [quantities, setQuantities] = useState({});
-	const [itemCosts, setItemCosts] = useState({}); // Added state for item costs
-	const { onDisplayCartChange } = props; // Destructure the prop
+	const [itemCosts, setItemCosts] = useState({});
+	const { onDisplayCartChange } = props;
+	const [currentDistance, setCurrentDistance] = useState('');
+	const [travelOption, setTravelOption] = useState('');
+	const [driveGas, setDriveGas] = useState('');
+	const [driveEV, setDriveEV] = useState('');
+	const [renderTravel, setRenderTravel] = useState(false);
+	const [priceToDrive, setPriceToDrive] = useState('');
 
 	useEffect(() => {
 		// Retrieve and parse the data from sessionStorage
@@ -81,18 +87,38 @@ function Cart(props) {
 				const data = await response.json();
 				console.log(data.closestStore);
 				console.log(data.distance);
-
-				if (data.distance > 150) {
-					onDisplayCartChange({ displayFlight: true, displayTravel: true });
-				} else {
-					onDisplayCartChange({ displayFlight: false, displayTravel: true });
-				}
+				console.log(data.costs);
+				console.log(data.costsElectric);
+				setCurrentDistance(data.distance);
+				setDriveGas(data.costs);
+				setDriveEV(data.costsElectric);
+				setRenderTravel(true);
 			} else {
 				console.log('Error: ', response.status);
 			}
 		} catch (err) {
 			console.log(err);
 		}
+	};
+
+	const handleTravelOptionChange = (e) => {
+		setTravelOption(e.target.value);
+	};
+
+	const calculateTotalCost = () => {
+		const itemsTotalCost = Object.values(itemCosts).reduce(
+			(acc, cost) => acc + parseFloat(cost),
+			0
+		);
+
+		let travelCost = 0;
+		if (travelOption === 'gas') {
+			travelCost = parseFloat(driveGas);
+		} else if (travelOption === 'ev') {
+			travelCost = parseFloat(driveEV);
+		}
+
+		return (itemsTotalCost + travelCost).toFixed(2);
 	};
 
 	return (
@@ -174,15 +200,34 @@ function Cart(props) {
 				onClick={handleSubmit}>
 				Submit
 			</button>
+			{renderTravel && (
+				<div>
+					<label>
+						<input
+							type="radio"
+							value="gas"
+							checked={travelOption === 'gas'}
+							onChange={handleTravelOptionChange}
+						/>
+						Gas
+					</label>
+					<label>
+						<input
+							type="radio"
+							value="ev"
+							checked={travelOption === 'ev'}
+							onChange={handleTravelOptionChange}
+						/>
+						EV
+					</label>
+				</div>
+			)}
+
 			<p>
-				Total Cost:{' '}
-				{Object.values(itemCosts)
-					.reduce((acc, cost) => acc + parseFloat(cost), 0)
-					.toFixed(2)}
-			</p>{' '}
-			{currencyCode}
+				Total Cost: {calculateTotalCost()} {currencyCode}
+			</p>
 		</div>
 	);
-};
+}
 
 export default Cart;
