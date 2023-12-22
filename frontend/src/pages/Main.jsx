@@ -6,12 +6,14 @@ import 'react-toastify/dist/ReactToastify.css';
 import Location from '../components/Location';
 import Search from '../components/Search';
 import Products from '../components/Products';
+import Cart from '../components/Cart';
 
 function Main() {
 	// Rendering
 	const [displayLocation, setDisplayLocation] = useState(true);
-  const [displaySearch, setDisplaySearch] = useState(false);
+	const [displaySearch, setDisplaySearch] = useState(false);
 	const [displayProducts, setDisplayProducts] = useState(false);
+	const [displayCart, setDisplayCart] = useState(false);
 
 	function handleDisplayLocationChange(Location) {
 		console.log('Location: ', Location);
@@ -40,9 +42,15 @@ function Main() {
 		console.log('Search.display: ', Product.display);
 		if (Product.display === false) {
 			setDisplayProducts(false);
+			setDisplayCart(true);
 		} else {
 			setDisplayLocation(true);
 		}
+	}
+
+	function handleDisplayCartChange(Cart) {
+		console.log('Search: ', Cart);
+		console.log('Search.display: ', Cart.display);
 	}
 
 	const contextClass = {
@@ -74,6 +82,7 @@ function Main() {
 			{displayProducts && (
 				<Products onDisplayProductsChange={handleDisplayProductsChange} />
 			)}
+			{displayCart && <Cart onDisplayCartChange={handleDisplayCartChange} />}
 		</>
 	);
 }
