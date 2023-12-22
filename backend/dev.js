@@ -4,6 +4,7 @@ const dotenv = require('dotenv');
 const cors = require('cors');
 const app = express();
 const http = require('http');
+const axios = require('axios');
 const fs = require('fs');
 
 // Import functions from the functions folder
@@ -79,7 +80,7 @@ app.post('/api/Search', async (req, res) => {
 		const currencies = cc[0].currencies;
 		const currencyCode = Object.keys(currencies)[0];
 		const exchangerates = await currencyFn.getExchangeRates();
-    const exchangeRateSpecifics = exchangerates[currencyCode];
+		const exchangeRateSpecifics = exchangerates[currencyCode];
 
 		const exchangeRate = await currencyFn.getConverstionRateToUSD();
 		console.log('exchangeRate:', exchangeRate);
@@ -134,6 +135,72 @@ app.post('/api/Search', async (req, res) => {
 
 		res.status(200).send({ updatedProducts: updatedProducts });
   */
+	}
+});
+
+app.post('/api/StoreLocation', async (req, res) => {
+	const user_location_longitude = req.body.location_longitude;
+	const user_location_latitude = req.body.location_latitude;
+	console.log(
+		'🚀 ~ file: dev.js:142 ~ app.post ~ user_location_longitude:',
+		user_location_longitude
+	);
+
+	console.log(
+		'🚀 ~ file: dev.js:144 ~ app.post ~ user_location_latitude:',
+		user_location_latitude
+	);
+
+	const url = `https://api.sallinggroup.com/v2/stores`;
+	const options = {
+		method: 'GET',
+		headers: {
+			Authorization: `Bearer 5afa1009-3c70-425a-a975-7202189d9824`,
+		},
+	};
+	try {
+		const response = await fetch(url, options);
+		const stores = await response.json();
+
+		let closestStore = null;
+		let minDistance = Infinity;
+
+		stores.forEach((store) => {
+			const [storeLongitude, storeLatitude] = store.coordinates;
+			const distance = calcFn.calcDistance(
+				user_location_latitude,
+				user_location_longitude,
+				storeLatitude,
+				storeLongitude
+			);
+
+			if (distance < minDistance) {
+				minDistance = distance;
+				closestStore = store;
+			}
+		});
+
+		console.log('closestStore:', closestStore);
+		console.log(closestStore.coordinates);
+
+		const costs = calcFn.calculateDrivingCost(minDistance, 4.13, 1.8);
+		console.log('costs:', costs);
+		const costsElectric = (minDistance / 15.38461538461538) * 1.05;
+
+		console.log('costsElectric:', costsElectric);
+
+		console.log(
+			`The closest store is ${closestStore.brand} located at ${closestStore.address.street}, ${closestStore.address.city}. Distance: ${minDistance} km`
+		);
+		res.status(200).send({
+			closestStore: closestStore.address,
+			distance: Math.floor(minDistance),
+			costs: parseFloat(costs.toFixed(2)),
+			costsElectric: parseFloat(costsElectric.toFixed(2)),
+		});
+	} catch (error) {
+		console.error(error);
+		res.status(500).send('An error occurred');
 	}
 });
 

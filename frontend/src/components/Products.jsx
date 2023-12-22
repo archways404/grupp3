@@ -8,7 +8,7 @@ function Products(props) {
 	const [products, setProducts] = useState([]);
 	const [allRates, setAllRates] = useState({}); // Changed to an object
 	const [exchangeRate, setExchangeRate] = useState('');
-  const [currencyCode, setCurrencyCode] = useState('');
+	const [currencyCode, setCurrencyCode] = useState('');
 	const [selectedProducts, setSelectedProducts] = useState([]);
 	const { onDisplayProductsChange } = props; // Destructure the prop
 
@@ -17,7 +17,7 @@ function Products(props) {
 		const searchResults = sessionStorage.getItem('searchResults');
 		if (searchResults) {
 			const data = JSON.parse(searchResults);
-      setProducts(data.updatedProducts);
+			setProducts(data.updatedProducts);
 			setAllRates(data.allRates);
 		}
 
@@ -49,8 +49,8 @@ function Products(props) {
 		setExchangeRate(selectedRate || 1); // Fallback to 1 if the rate is not found
 		setCurrencyCode(selectedCurrencyCode);
 	};
-  
-  const handleAddProduct = (product) => {
+
+	const handleAddProduct = (product) => {
 		setSelectedProducts((prevSelectedProducts) => [
 			...prevSelectedProducts,
 			product,
@@ -61,6 +61,22 @@ function Products(props) {
 		setSelectedProducts((prevSelectedProducts) =>
 			prevSelectedProducts.filter((product) => product.prod_id !== prodId)
 		);
+	};
+
+	const handleDisplayCart = async () => {
+		try {
+			sessionStorage.setItem(
+				'selectedProducts',
+				JSON.stringify(selectedProducts)
+			);
+			console.log('selectedProducts: ', selectedProducts);
+			onDisplayProductsChange({ display: false });
+		} catch (err) {
+			console.log(err);
+			toast.error(`Response from backend: \n ${err}`, {
+				position: toast.POSITION.TOP_CENTER,
+			});
+		}
 	};
 
 	return (
@@ -96,6 +112,13 @@ function Products(props) {
 						))}
 					</select>
 				</div>
+
+				{/* Cart Button */}
+				<button
+					className="p-2 text-white font-bold rounded bg-blue-500 absolute top-0 right-0 m-4"
+					onClick={handleDisplayCart}>
+					Cart ({selectedProducts.length})
+				</button>
 
 				{/* Product Cards Container */}
 				<div className="product-cards-container w-full px-4 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
@@ -138,6 +161,5 @@ function Products(props) {
 			</div>
 		</>
 	);
-}
-
+}         
 export default Products;

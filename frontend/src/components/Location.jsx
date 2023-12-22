@@ -8,17 +8,14 @@ function Location(props) {
 	const [location, setLocation] = useState('');
 	const [cordinates, setCordinates] = useState({});
 	const [displayLocation, setDisplayLocation] = useState(true);
+	const { onDisplayLocationChange } = props; // Destructure the prop
 
 	function success(pos) {
 		var crd = pos.coords;
-		console.log(crd);
-		console.log('Your current position is:');
-		console.log(`Latitude : ${crd.latitude}`);
-		console.log(`Longitude: ${crd.longitude}`);
 		sessionStorage.setItem('latitude', crd.latitude);
 		sessionStorage.setItem('longitude', crd.longitude);
 		setCordinates({ latitude: crd.latitude, longitude: crd.longitude });
-		setDisplayLocation(false);
+		onDisplayLocationChange(false);
 	}
 
 	function errors(err) {
@@ -57,8 +54,6 @@ function Location(props) {
 		setLocation(event.target.value);
 	};
 
-	const { onDisplayLocationChange } = props; // Destructure the prop
-
 	const handleLocationSubmit = async (e) => {
 		e.preventDefault(); // Prevent default form submission behavior
 		try {
@@ -71,7 +66,7 @@ function Location(props) {
 			});
 			if (response.status === 200) {
 				const data = await response.json();
-        const cords = data.cordinates;
+				const cords = data.cordinates;
 				setDisplayLocation(false);
 				console.log(cords);
 				sessionStorage.setItem('latitude', cords.latitude);
@@ -129,12 +124,12 @@ function Location(props) {
 						className="bg-green-500 hover:bg-green-600 text-black py-2 px-4 rounded">
 						Next
 					</button>
-					<button
-						className="bg-green-500 hover:bg-green-600 text-black py-2 px-4 rounded"
-						onClick={fetchLocation}>
-						Fetch Location
-					</button>
 				</form>
+				<button
+					className="bg-green-500 ml-3 hover:bg-green-600 text-black py-2 px-4 rounded"
+					onClick={fetchLocation}>
+					Fetch Location
+				</button>
 			</div>
 		</>
 	);
