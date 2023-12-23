@@ -87,36 +87,31 @@ function Search(props) {
 				autoClose={3000}
 			/>
 			<div className="flex justify-center items-center h-screen bg-slate-700">
-				<ToastContainer
-					toastClassName={({ type }) =>
-						contextClass[type || 'dark'] +
-						' relative flex p-1 min-h-10 rounded-md justify-between overflow-hidden cursor-pointer'
-					}
-					bodyClassName={() => 'text-sm font-white font-med block p-3'}
-					position="bottom-left"
-					autoClose={3000}
-				/>
-				<form
-					onSubmit={handleSearchSubmit}
-					className="flex flex-col items-center space-y-4">
-					<input
-						className="w-64 h-12 px-4 rounded-md bg-slate-800 text-gray-200"
-						placeholder="Search for beers"
-						type="text"
-						value={searchValue}
-						onChange={handleChangeSearch}
-					/>
-					<button
-						type="submit"
-						className="bg-green-500 hover:bg-green-600 text-black py-2 px-4 rounded">
-						Search
-					</button>
-					<button
-						onClick={() => onDisplaySearchChange({ display: true })}
-						className="bg-red-500 hover:bg-red-600 text-black py-2 px-4 rounded">
-						Back
-					</button>
-				</form>
+				<div className="p-8 bg-slate-600 rounded-lg shadow-xl">
+					<form
+						onSubmit={handleSearchSubmit}
+						className="flex flex-col items-center space-y-4">
+						<input
+							className="w-full h-12 px-4 rounded-md bg-slate-800 text-gray-200 focus:outline-none focus:ring-2 focus:ring-green-500"
+							placeholder="Search for beers"
+							type="text"
+							value={searchValue}
+							onChange={handleChangeSearch}
+						/>
+						<div className="flex space-x-3 w-full">
+							<button
+								type="submit"
+								className="bg-green-500 hover:bg-green-600 text-white py-2 px-4 rounded-md transition duration-300 ease-in-out transform hover:scale-105 flex-grow">
+								Search
+							</button>
+							<button
+								onClick={() => onDisplaySearchChange({ display: true })}
+								className="bg-red-500 hover:bg-red-600 text-white py-2 px-4 rounded-md transition duration-300 ease-in-out transform hover:scale-105 flex-grow">
+								Back
+							</button>
+						</div>
+					</form>
+				</div>
 			</div>
 		</>
 	);
