@@ -100,13 +100,14 @@ function Summary(props) {
 	}, [selectedProducts, orderAmount, exchangeRate]);
 
 	return (
-		<div className="flex flex-col justify-start items-center pt-10 bg-slate-700 min-h-screen">
-			<p>Summary Page</p>
+		<div className="flex flex-col justify-start items-center pt-10 bg-slate-700 min-h-screen text-white">
+			<h1 className="text-3xl font-bold mb-6">Summary Page</h1>
+
 			{/* Currency Dropdown */}
-			<div className="currency-selector mb-6">
+			<div className="currency-selector mb-6 bg-slate-600 p-4 rounded-lg">
 				<label
 					htmlFor="currency-select"
-					className="text-white mr-2">
+					className="mr-2">
 					Choose Currency:
 				</label>
 				<select
@@ -123,31 +124,38 @@ function Summary(props) {
 					))}
 				</select>
 			</div>
-			<div className="item-amounts mt-4">
+
+			{/* Products List */}
+			<div className="item-amounts mt-4 w-full max-w-4xl">
 				{selectedProducts.map((product) => {
 					const amount = orderAmount[product.prod_id] || 'N/A';
 					return (
 						<div
 							key={product.prod_id}
-							className="text-white mb-2">
-							{`${product.title} ${(product.price * exchangeRate).toFixed(
+							className="bg-slate-600 p-4 rounded-lg mb-4 shadow-lg flex justify-between items-center">
+							<span>{product.title}</span>
+							<span>{`Unit Price: ${(product.price * exchangeRate).toFixed(
 								2
-							)} ${currencyCode} -> ${amount} units -> Total: ${
+							)} ${currencyCode}`}</span>
+							<span>{`${amount} units`}</span>
+							<span>{`Total: ${
 								itemCosts[product.prod_id]
-							} ${currencyCode}`}
+							} ${currencyCode}`}</span>
 						</div>
 					);
 				})}
 			</div>
-			{/* Display travel cost */}
-			<div className="travel-cost text-white mt-4">
-				{`Travel Cost: ${travelCost.toFixed(2)} ${currencyCode}`}
+
+			{/* Travel Cost Section */}
+			<div className="travel-cost mt-6 w-full max-w-4xl bg-slate-600 p-4 rounded-lg shadow-lg">
+				<p>{`Travel Cost: ${travelCost.toFixed(2)} ${currencyCode}`}</p>
 			</div>
-			{/* Display total cost */}
-			<div className="total-cost text-white mt-4">
-				{`Total Cost (Including Travel): ${totalCost.toFixed(
+
+			{/* Total Cost Section */}
+			<div className="total-cost mt-4 w-full max-w-4xl bg-slate-600 p-4 rounded-lg shadow-lg">
+				<p>{`Total Cost (Including Travel): ${totalCost.toFixed(
 					2
-				)} ${currencyCode}`}
+				)} ${currencyCode}`}</p>
 			</div>
 		</div>
 	);
