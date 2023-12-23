@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 /* eslint-disable no-unused-vars */
 import { useState, useEffect } from 'react';
 import { ToastContainer, toast } from 'react-toastify';
@@ -121,29 +122,37 @@ function Products(props) {
 				</button>
 
 				{/* Product Cards Container */}
-				<div className="product-cards-container w-full px-4 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+				<div className="product-cards-container w-full px-4 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2">
 					{products.map((product) => (
 						<div
 							key={product.prod_id}
-							className="card bg-white rounded-lg shadow-lg overflow-hidden max-w-sm">
-							<img
-								src={product.img}
-								alt={product.title}
-								className="card-img object-cover h-48 w-full"
-							/>
-							<div className="card-body p-4">
+							className="card bg-white rounded-lg shadow-lg overflow-hidden"
+							style={{ maxWidth: 'calc(100% * 2 / 3)' }}>
+							{' '}
+							{/* Reduced card width */}
+							<div className="h-24 w-full flex items-center justify-center">
+								{' '}
+								{/* Adjusted image container height */}
+								<img
+									src={product.img}
+									alt={product.title}
+									className="max-h-full max-w-full object-contain"
+								/>
+							</div>
+							<div className="card-body p-3 flex flex-col justify-between">
+								{' '}
+								{/* Adjusted padding */}
 								<h5 className="card-title text-lg font-semibold truncate">
 									{product.title}
 								</h5>
-
-								<p className="card-price text-xl font-bold">
+								<p className="card-price text-lg font-bold">
 									{(product.price * exchangeRate).toFixed(2)} {currencyCode}
 								</p>
 								<button
-									className={`p-2 text-white font-bold rounded ${
+									className={`p-1 text-white font-bold rounded text-sm ${
 										selectedProducts.some((p) => p.prod_id === product.prod_id)
-											? 'bg-red-500'
-											: 'bg-green-500'
+											? 'bg-red-500 hover:bg-red-600'
+											: 'bg-green-500 hover:bg-green-600'
 									}`}
 									onClick={() => {
 										selectedProducts.some((p) => p.prod_id === product.prod_id)
@@ -161,5 +170,5 @@ function Products(props) {
 			</div>
 		</>
 	);
-}         
+}
 export default Products;

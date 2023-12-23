@@ -19,7 +19,8 @@ function Cart(props) {
 	const [driveGas, setDriveGas] = useState('');
 	const [driveEV, setDriveEV] = useState('');
 	const [renderTravel, setRenderTravel] = useState(false);
-	const [priceToDrive, setPriceToDrive] = useState('');
+  const [priceToDrive, setPriceToDrive] = useState('');
+	const [submitClicked, setSubmitClicked] = useState(false);
 
 	useEffect(() => {
 		// Retrieve and parse the data from sessionStorage
@@ -102,6 +103,7 @@ function Cart(props) {
 				setDriveGas(data.costs);
 				setDriveEV(data.costsElectric);
 				setRenderTravel(true);
+				setSubmitClicked(true);
 			} else {
 				console.log('Error: ', response.status);
 			}
@@ -133,12 +135,12 @@ function Cart(props) {
 	};
 
 	return (
-		<div className="flex flex-col justify-start items-center pt-10 bg-slate-700 min-h-screen">
+		<div className="flex flex-col justify-start items-center pt-10 bg-slate-700 min-h-screen text-white">
 			{/* Currency Dropdown */}
-			<div className="currency-selector mb-6">
+			<div className="currency-selector mb-6 bg-slate-600 p-4 rounded-lg">
 				<label
 					htmlFor="currency-select"
-					className="text-white mr-2">
+					className="mr-2">
 					Choose Currency:
 				</label>
 				<select
@@ -155,70 +157,82 @@ function Cart(props) {
 					))}
 				</select>
 			</div>
+
+			{/* Product Cards */}
 			<div className="product-cards-container w-full px-4">
 				{selectedProducts.map((product, index) => (
 					<div
 						key={index}
-						className="flex items-center mb-4">
-						<div className="mr-4">
-							<h3>{product.title}</h3>
-							<p className="card-price text-xl font-bold">
-								{(product.price * exchangeRate).toFixed(2)} {currencyCode}
-							</p>
-						</div>
-						<div className="mr-4">
-							<label htmlFor={`quantity-select-${product.prod_id}`}>
-								Amount:
-							</label>
-							<select
-								id={`quantity-select-${product.prod_id}`}
-								value={quantities[product.prod_id] || ''}
-								onChange={(e) =>
-									handleQuantityChange(product.prod_id, e.target.value)
-								}
-								className="p-2 rounded border border-gray-300 bg-white text-black">
-								{Array.from({ length: 20 }, (_, i) => i + 0).map((amount) => (
-									<option
-										key={amount}
-										value={amount}>
-										{amount}
-									</option>
-								))}
-							</select>
-						</div>
-						<div className="mr-4">
-							<p>
-								Cost: {itemCosts[product.prod_id] || '0.00'} {currencyCode}
-							</p>
-						</div>
-						<div className="mr-4">x</div>
-						<div>
-							<p>
-								Calculated Price for the Item:{' '}
-								{(
-									product.price *
-									exchangeRate *
-									(quantities[product.prod_id] || 0)
-								).toFixed(2)}{' '}
-								{currencyCode}
-							</p>
+						className="bg-slate-600 p-4 rounded-lg mb-4 shadow-lg">
+						<div className="flex items-center justify-between">
+							<div>
+								<h3 className="text-xl font-semibold">{product.title}</h3>
+								<p className="text-lg">
+									{(product.price * exchangeRate).toFixed(2)} {currencyCode}
+								</p>
+							</div>
+							<div>
+								<label
+									htmlFor={`quantity-select-${product.prod_id}`}
+									className="mr-2">
+									Amount:
+								</label>
+								<select
+									id={`quantity-select-${product.prod_id}`}
+									value={quantities[product.prod_id] || ''}
+									onChange={(e) =>
+										handleQuantityChange(product.prod_id, e.target.value)
+									}
+									className="p-2 rounded border border-gray-300 bg-white text-black">
+									{Array.from({ length: 20 }, (_, i) => i + 0).map((amount) => (
+										<option
+											key={amount}
+											value={amount}>
+											{amount}
+										</option>
+									))}
+								</select>
+							</div>
+							<div>
+								<p>
+									Cost: {itemCosts[product.prod_id] || '0.00'} {currencyCode}
+								</p>
+							</div>
+							<div>
+								<p>
+									Calculated Price for the Item:{' '}
+									{(
+										product.price *
+										exchangeRate *
+										(quantities[product.prod_id] || 0)
+									).toFixed(2)}{' '}
+									{currencyCode}
+								</p>
+							</div>
 						</div>
 					</div>
 				))}
 			</div>
-			<button
-				className="p-2 text-white font-bold rounded bg-blue-500 mt-10"
-				onClick={handleSubmit}>
-				Submit
-			</button>
+
+			{/* Submit Button */}
+			{!submitClicked && (
+				<button
+					className="p-2 text-white font-bold rounded bg-blue-500 mt-10 hover:bg-blue-600 transition-colors"
+					onClick={handleSubmit}>
+					Submit
+				</button>
+			)}
+
+			{/* Travel Options */}
 			{renderTravel && (
-				<div>
-					<label>
+				<div className="travel-options bg-slate-600 p-4 rounded-lg mt-6">
+					<label className="mr-4">
 						<input
 							type="radio"
 							value="gas"
 							checked={travelOption === 'gas'}
 							onChange={handleTravelOptionChange}
+							className="mr-2"
 						/>
 						Gas
 					</label>
@@ -228,24 +242,29 @@ function Cart(props) {
 							value="ev"
 							checked={travelOption === 'ev'}
 							onChange={handleTravelOptionChange}
+							className="mr-2"
 						/>
 						EV
 					</label>
 				</div>
 			)}
 
-			<p>
+			{/* Total Cost */}
+			<p className="mt-6">
 				Total Cost: {calculateTotalCost()} {currencyCode}
 			</p>
+
+			{/* Final Submit Button */}
 			<button
-				className="p-2 text-white font-bold rounded bg-blue-500 mt-10"
+				className="p-2 text-white font-bold rounded bg-blue-500 mt-10 hover:bg-blue-600 transition-colors"
 				onClick={() =>
 					onDisplayCartChange({ displayCart: false, showSummary: true })
 				}>
-				Submit
+				Go to Summary
 			</button>
 		</div>
 	);
+
 }
 
 export default Cart;
