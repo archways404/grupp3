@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 /* eslint-disable no-unused-vars */
 import { useState, useEffect } from 'react';
 import { ToastContainer, toast } from 'react-toastify';
@@ -15,7 +16,7 @@ function Search(props) {
 
 	const handleSearchSubmit = async (e) => {
 		e.preventDefault(); // Prevent default form submission behavior
-    try {
+		try {
 			const cord_long = sessionStorage.getItem('longitude');
 			const cord_lat = sessionStorage.getItem('latitude');
 			console.log(
@@ -46,8 +47,8 @@ function Search(props) {
 				});
 				// Save search value to session storage
 				sessionStorage.setItem('searchValue', searchValue);
-        sessionStorage.setItem('searchResults', JSON.stringify(data));
-        sessionStorage.setItem(
+				sessionStorage.setItem('searchResults', JSON.stringify(data));
+				sessionStorage.setItem(
 					'localExchangeRate',
 					JSON.stringify(data.exchangeRate)
 				);
