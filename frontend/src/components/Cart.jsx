@@ -1,3 +1,5 @@
+/* eslint-disable react-hooks/exhaustive-deps */
+/* eslint-disable no-unused-vars */
 import React, { useState, useEffect } from 'react';
 
 function Cart(props) {
@@ -10,6 +12,7 @@ function Cart(props) {
 	const [currencyCode, setCurrencyCode] = useState('');
 	const [quantities, setQuantities] = useState({});
 	const [itemCosts, setItemCosts] = useState({});
+	// eslint-disable-next-line react/prop-types
 	const { onDisplayCartChange } = props;
 	const [currentDistance, setCurrentDistance] = useState('');
 	const [travelOption, setTravelOption] = useState('');
@@ -69,6 +72,7 @@ function Cart(props) {
 		try {
 			// Send the order to the backend using quantities object
 			console.log('Order submitted:', quantities);
+			sessionStorage.setItem('order', JSON.stringify(quantities));
 			const location_longitude = sessionStorage.getItem('longitude');
 			const location_latitude = sessionStorage.getItem('latitude');
 
@@ -86,6 +90,11 @@ function Cart(props) {
 			if (response.status === 200) {
 				const data = await response.json();
 				console.log(data.closestStore);
+				sessionStorage.setItem(
+					'closestStore',
+					JSON.stringify(data.closestStore)
+				);
+				sessionStorage.setItem('distance', JSON.stringify(data.distance));
 				console.log(data.distance);
 				console.log(data.costs);
 				console.log(data.costsElectric);
@@ -114,8 +123,10 @@ function Cart(props) {
 		let travelCost = 0;
 		if (travelOption === 'gas') {
 			travelCost = parseFloat(driveGas);
+			sessionStorage.setItem('travelCost', JSON.stringify(driveGas));
 		} else if (travelOption === 'ev') {
 			travelCost = parseFloat(driveEV);
+			sessionStorage.setItem('travelCost', JSON.stringify(driveEV));
 		}
 
 		return (itemsTotalCost + travelCost).toFixed(2);
@@ -226,6 +237,13 @@ function Cart(props) {
 			<p>
 				Total Cost: {calculateTotalCost()} {currencyCode}
 			</p>
+			<button
+				className="p-2 text-white font-bold rounded bg-blue-500 mt-10"
+				onClick={() =>
+					onDisplayCartChange({ displayCart: false, showSummary: true })
+				}>
+				Submit
+			</button>
 		</div>
 	);
 }

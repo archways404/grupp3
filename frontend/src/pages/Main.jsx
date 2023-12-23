@@ -7,6 +7,7 @@ import Location from '../components/Location';
 import Search from '../components/Search';
 import Products from '../components/Products';
 import Cart from '../components/Cart';
+import Summary from '../components/Summary';
 
 
 function Main() {
@@ -14,7 +15,8 @@ function Main() {
 	const [displayLocation, setDisplayLocation] = useState(true);
 	const [displaySearch, setDisplaySearch] = useState(false);
 	const [displayProducts, setDisplayProducts] = useState(false);
-	const [displayCart, setDisplayCart] = useState(false);
+  const [displayCart, setDisplayCart] = useState(false);
+	const [displaySummary, setDisplaySummary] = useState(false);
 
 	function handleDisplayLocationChange(Location) {
 		console.log('Location: ', Location);
@@ -50,16 +52,18 @@ function Main() {
 	}
 
 	function handleDisplayCartChange(Cart) {
-		console.log('Cart.displayFlight: ', Cart.displayFlight);
-		console.log('Cart.displayTravel: ', Cart.displayTravel);
-		if (Cart.displayFlight === true) {
-			setDisplayFlight(true);
-			setDisplayTravel(true);
+		console.log('Cart.displayCart: ', Cart.displayCart);
+		console.log('Cart.showSummary: ', Cart.showSummary);
+		if (Cart.displayCart === false) {
 			setDisplayCart(false);
+			setDisplaySummary(true);
 		} else {
-			setDisplayTravel(true);
-			setDisplayCart(false);
+			setDisplayCart(true);
 		}
+	}
+
+	function handleDisplaySummaryChange(Summary) {
+		console.log('Summary: ', Summary);
 	}
 
 	const contextClass = {
@@ -92,6 +96,9 @@ function Main() {
 				<Products onDisplayProductsChange={handleDisplayProductsChange} />
 			)}
 			{displayCart && <Cart onDisplayCartChange={handleDisplayCartChange} />}
+			{displaySummary && (
+				<Summary onDisplaySummaryChange={handleDisplaySummaryChange} />
+			)}
 		</>
 	);
 }
