@@ -102,28 +102,6 @@ app.post('/api/Search', async (req, res) => {
 	} catch (error) {
 		console.error(error);
 		return error;
-
-		/*
-	const exchangeRate = await currencyFn.getConverstionRateToUSD();
-	console.log('exchangeRate:', exchangeRate);
-	const products = await searchFn.convertProducts();
-
-	if (searchValue === '') {
-		const updatedProducts = searchFn.convertPrice(products, exchangeRate);
-		console.log(updatedProducts);
-		res.status(200).send({ updatedProducts: products });
-	} else {
-		const product_name = searchFn.getProductByName(products, searchValue);
-		console.log('getProductByName', product_name);
-
-		const updatedProducts = await searchFn.convertPrice(
-			product_name,
-			exchangeRate
-		);
-		console.log(updatedProducts);
-
-		res.status(200).send({ updatedProducts: updatedProducts });
-  */
 	}
 });
 
