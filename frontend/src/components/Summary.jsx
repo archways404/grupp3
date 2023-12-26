@@ -110,11 +110,11 @@ function Summary(props) {
 	}, [selectedProducts, orderAmount, exchangeRate]);
 
 	return (
-		<div className="flex flex-col justify-start items-center pt-10 bg-slate-700 min-h-screen text-white">
+		<div className="flex flex-col justify-start items-center pt-10 bg-gray-950 min-h-screen text-white">
 			<h1 className="text-3xl font-bold mb-6">Summary Page</h1>
 
 			{/* Currency Dropdown */}
-			<div className="currency-selector mb-6 bg-slate-600 p-4 rounded-lg">
+			<div className="currency-selector mb-6 bg-gray-950 p-4 rounded-lg">
 				<label
 					htmlFor="currency-select"
 					className="mr-2">
@@ -124,7 +124,7 @@ function Summary(props) {
 					id="currency-select"
 					onChange={handleCurrencyChange}
 					value={currencyCode}
-					className="p-2 rounded border border-gray-300 bg-white text-black">
+					className="p-2 rounded bg-gray-950 text-white">
 					{Object.keys(allRates).map((code) => (
 						<option
 							key={code}
@@ -142,7 +142,7 @@ function Summary(props) {
 					return (
 						<div
 							key={product.prod_id}
-							className="bg-slate-600 p-4 rounded-lg mb-4 shadow-lg flex justify-between items-center">
+							className="bg-gray-800 p-4 rounded-lg mb-4 shadow-lg flex justify-between items-center">
 							<span>{product.title}</span>
 							<span>{`Unit Price: ${(product.price * exchangeRate).toFixed(
 								2
@@ -157,7 +157,7 @@ function Summary(props) {
 			</div>
 
 			{/* Closest Store Details */}
-			<div className="travel-cost mt-6 w-full max-w-4xl bg-slate-600 p-4 rounded-lg shadow-lg">
+			<div className="travel-cost mt-6 w-full max-w-4xl bg-gray-800 p-4 rounded-lg shadow-lg">
 				<p>{`City: ${closestStore.city}`}</p>
 				<p>{`Country: ${closestStore.country}`}</p>
 				<p>{`Street: ${closestStore.street}`}</p>
@@ -165,26 +165,26 @@ function Summary(props) {
 			</div>
 
 			{/* Travel Cost Section */}
-			<div className="travel-cost mt-6 w-full max-w-4xl bg-slate-600 p-4 rounded-lg shadow-lg">
+			<div className="travel-cost mt-6 w-full max-w-4xl bg-gray-800 p-4 rounded-lg shadow-lg">
 				<p>{`Travel Cost: ${travelCost.toFixed(2)} ${currencyCode}`}</p>
 			</div>
 
 			{/* Cart Cost */}
-			<div className="total-cost mt-4 w-full max-w-4xl bg-slate-600 p-4 rounded-lg shadow-lg">
+			<div className="total-cost mt-4 w-full max-w-4xl bg-gray-800 p-4 rounded-lg shadow-lg">
 				<p>{`Total Cost (Excluding Travel): ${cartCost.toFixed(
 					2
 				)} ${currencyCode}`}</p>
 			</div>
 
 			{/* Total Cost Section */}
-			<div className="total-cost mt-4 w-full max-w-4xl bg-slate-600 p-4 rounded-lg shadow-lg">
+			<div className="total-cost mt-4 w-full max-w-4xl bg-gray-800 p-4 rounded-lg shadow-lg">
 				<p>{`Total Cost (Including Travel): ${totalCost.toFixed(
 					2
 				)} ${currencyCode}`}</p>
 			</div>
 			<button
 				onClick={() => window.print()}
-				className="p-2 text-white font-bold rounded bg-blue-500 mt-4 hover:bg-blue-600 transition-colors">
+				className="p-2 text-black font-bold rounded bg-blue-500 mt-4 hover:bg-blue-600 transition-colors">
 				Print Receipt
 			</button>
 			<ProgressBar progress={progress} />

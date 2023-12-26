@@ -112,14 +112,14 @@ function Location(props) {
 				position="bottom-left"
 				autoClose={3000}
 			/>
-			<div className="flex justify-center items-center h-screen bg-slate-700">
+			<div className="flex justify-center items-center h-screen bg-gray-950">
 				{/* Form Container with Shadow and Padding */}
-				<div className="p-8 bg-slate-600 rounded-lg shadow-xl">
+				<div className="p-8 bg-gray-800 rounded-lg shadow-xl">
 					<form
 						onSubmit={handleLocationSubmit}
 						className="flex flex-col items-center space-y-4">
 						<input
-							className="w-full h-12 px-4 rounded-md bg-slate-800 text-gray-200 focus:outline-none focus:ring-2 focus:ring-green-500"
+							className="w-full h-12 px-4 rounded-md bg-gray-950 text-gray-200 focus:outline-none focus:ring-2 focus:ring-green-500"
 							placeholder="Enter your location"
 							type="text"
 							value={location}
@@ -128,11 +128,11 @@ function Location(props) {
 						<div className="flex space-x-3">
 							<button
 								type="submit"
-								className="flex-1 bg-green-500 hover:bg-green-600 text-white py-2 px-4 rounded-md transition duration-300 ease-in-out transform hover:scale-105">
+								className="flex-1 bg-green-500 hover:bg-green-600 text-black py-2 px-4 rounded-md transition duration-300 ease-in-out transform hover:scale-105">
 								Next
 							</button>
 							<button
-								className="flex-1 bg-green-500 hover:bg-green-600 text-white py-2 px-4 rounded-md transition duration-300 ease-in-out transform hover:scale-105"
+								className="flex-1 bg-green-500 hover:bg-green-600 text-black py-2 px-4 rounded-md transition duration-300 ease-in-out transform hover:scale-105"
 								onClick={fetchLocation}>
 								Fetch Location
 							</button>

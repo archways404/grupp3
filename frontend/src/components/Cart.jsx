@@ -147,9 +147,9 @@ function Cart(props) {
 	};
 
 	return (
-		<div className="flex flex-col justify-start items-center pt-10 bg-slate-700 min-h-screen text-white">
+		<div className="flex flex-col justify-start items-center pt-10 bg-gray-950 min-h-screen text-white">
 			{/* Currency Dropdown */}
-			<div className="currency-selector mb-6 bg-slate-600 p-4 rounded-lg">
+			<div className="currency-selector mb-6 bg-gray-800 p-4 rounded-lg">
 				<label
 					htmlFor="currency-select"
 					className="mr-2">
@@ -159,7 +159,7 @@ function Cart(props) {
 					id="currency-select"
 					onChange={handleCurrencyChange}
 					value={currencyCode}
-					className="p-2 rounded border border-gray-300 bg-white text-black">
+					className="p-2 rounded border bg-gray-950 text-white">
 					{Object.keys(allRates).map((code) => (
 						<option
 							key={code}
@@ -175,7 +175,7 @@ function Cart(props) {
 				{selectedProducts.map((product, index) => (
 					<div
 						key={index}
-						className="bg-slate-600 p-4 rounded-lg mb-4 shadow-lg">
+						className="bg-gray-800 p-4 rounded-lg mb-4 shadow-lg">
 						<div className="flex items-center justify-between">
 							<div>
 								<h3 className="text-xl font-semibold">{product.title}</h3>
@@ -195,7 +195,7 @@ function Cart(props) {
 									onChange={(e) =>
 										handleQuantityChange(product.prod_id, e.target.value)
 									}
-									className="p-2 rounded border border-gray-300 bg-white text-black">
+									className="p-2 rounded border border-white bg-gray-950 text-white">
 									{Array.from({ length: 20 }, (_, i) => i + 0).map((amount) => (
 										<option
 											key={amount}
@@ -237,7 +237,7 @@ function Cart(props) {
 
 			{/* Travel Options */}
 			{renderTravel && (
-				<div className="travel-options bg-slate-600 p-4 rounded-lg mt-6">
+				<div className="travel-options bg-gray-800 p-4 rounded-lg mt-6">
 					<label className="mr-4">
 						<input
 							type="radio"
