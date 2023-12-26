@@ -1,8 +1,7 @@
 
-# GROUP 3
+# G3
 
-Introduction text
-
+A simple website to plan a trip to Denmark and purchase beer with pricing information & approximate travel costs.
 
 ## Documentation
 
@@ -34,6 +33,7 @@ node -v
 
 If you get something along the lines of:
 ```bash
+$ node -v
 v18.16.0
 ```
 Then you have installed NodeJS successfully and can proceed!
