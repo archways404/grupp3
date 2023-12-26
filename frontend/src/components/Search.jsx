@@ -3,12 +3,15 @@
 import { useState, useEffect } from 'react';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import ProgressBar from './ProgressBar';
 
 function Search(props) {
 	// Values
 	const [searchValue, setSearchValue] = useState('');
 
 	const { onDisplaySearchChange } = props; // Destructure the prop
+
+	const progress = 10;
 
 	const handleChangeSearch = (event) => {
 		setSearchValue(event.target.value);
@@ -114,6 +117,7 @@ function Search(props) {
 					</form>
 				</div>
 			</div>
+			<ProgressBar progress={progress} />
 		</>
 	);
 }

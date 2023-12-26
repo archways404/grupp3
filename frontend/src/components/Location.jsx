@@ -3,6 +3,7 @@
 import { useState, useEffect } from 'react';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import ProgressBar from './ProgressBar';
 
 function Location(props) {
 	// Values
@@ -10,6 +11,8 @@ function Location(props) {
 	const [cordinates, setCordinates] = useState({});
 	const [displayLocation, setDisplayLocation] = useState(true);
 	const { onDisplayLocationChange } = props; // Destructure the prop
+
+	const progress = 5;
 
 	function success(pos) {
 		var crd = pos.coords;
@@ -137,6 +140,7 @@ function Location(props) {
 					</form>
 				</div>
 			</div>
+			<ProgressBar progress={progress} />
 		</>
 	);
 }

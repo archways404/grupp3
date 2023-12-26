@@ -9,7 +9,6 @@ import Products from '../components/Products';
 import Cart from '../components/Cart';
 import Summary from '../components/Summary';
 
-
 function Main() {
 	// Rendering
 	const [displayLocation, setDisplayLocation] = useState(true);

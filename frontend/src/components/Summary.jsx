@@ -1,6 +1,7 @@
 /* eslint-disable react/prop-types */
 /* eslint-disable no-unused-vars */
 import React, { useState, useEffect } from 'react';
+import ProgressBar from './ProgressBar';
 
 function Summary(props) {
 	const { onDisplaySummaryChange } = props;
@@ -13,15 +14,23 @@ function Summary(props) {
 	const [totalCost, setTotalCost] = useState(0);
 	const [selectedProducts, setSelectedProducts] = useState([]);
 	const [orderAmount, setOrderAmount] = useState([]);
+	const [cartCost, setCartCost] = useState(0);
+	const [closestStore, setClosestStore] = useState('');
+
+	const progress = 100;
 
 	useEffect(() => {
 		const productsData = sessionStorage.getItem('selectedProducts');
 		const travelData = sessionStorage.getItem('travelCost');
 		const orderData = sessionStorage.getItem('order');
+		const closestStoreData = sessionStorage.getItem('closestStore');
 
 		if (productsData) setSelectedProducts(JSON.parse(productsData));
 		if (travelData) setTravelCost(JSON.parse(travelData));
 		if (orderData) setOrderAmount(JSON.parse(orderData));
+		if (closestStoreData) {
+			setClosestStore(JSON.parse(closestStoreData)); // Parse the JSON string
+		}
 	}, []);
 
 	useEffect(() => {
@@ -35,6 +44,7 @@ function Summary(props) {
 			total += parseFloat(itemCost); // Accumulate the total cost
 		});
 		setItemCosts(updatedItemCosts);
+		setCartCost(total);
 		setTotalCost(total + travelCost); // Add travel cost to total
 	}, [selectedProducts, orderAmount, exchangeRate, travelCost]);
 
@@ -146,9 +156,24 @@ function Summary(props) {
 				})}
 			</div>
 
+			{/* Closest Store Details */}
+			<div className="travel-cost mt-6 w-full max-w-4xl bg-slate-600 p-4 rounded-lg shadow-lg">
+				<p>{`City: ${closestStore.city}`}</p>
+				<p>{`Country: ${closestStore.country}`}</p>
+				<p>{`Street: ${closestStore.street}`}</p>
+				<p>{`ZIP Code: ${closestStore.zip}`}</p>
+			</div>
+
 			{/* Travel Cost Section */}
 			<div className="travel-cost mt-6 w-full max-w-4xl bg-slate-600 p-4 rounded-lg shadow-lg">
 				<p>{`Travel Cost: ${travelCost.toFixed(2)} ${currencyCode}`}</p>
+			</div>
+
+			{/* Cart Cost */}
+			<div className="total-cost mt-4 w-full max-w-4xl bg-slate-600 p-4 rounded-lg shadow-lg">
+				<p>{`Total Cost (Excluding Travel): ${cartCost.toFixed(
+					2
+				)} ${currencyCode}`}</p>
 			</div>
 
 			{/* Total Cost Section */}
@@ -157,6 +182,12 @@ function Summary(props) {
 					2
 				)} ${currencyCode}`}</p>
 			</div>
+			<button
+				onClick={() => window.print()}
+				className="p-2 text-white font-bold rounded bg-blue-500 mt-4 hover:bg-blue-600 transition-colors">
+				Print Receipt
+			</button>
+			<ProgressBar progress={progress} />
 		</div>
 	);
 }

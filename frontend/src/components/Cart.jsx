@@ -1,6 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable no-unused-vars */
 import React, { useState, useEffect } from 'react';
+import ProgressBar from './ProgressBar';
 
 function Cart(props) {
 	const selectedProducts = JSON.parse(
@@ -19,8 +20,10 @@ function Cart(props) {
 	const [driveGas, setDriveGas] = useState('');
 	const [driveEV, setDriveEV] = useState('');
 	const [renderTravel, setRenderTravel] = useState(false);
-  const [priceToDrive, setPriceToDrive] = useState('');
+	const [priceToDrive, setPriceToDrive] = useState('');
 	const [submitClicked, setSubmitClicked] = useState(false);
+
+	const progress = 60;
 
 	useEffect(() => {
 		// Retrieve and parse the data from sessionStorage
@@ -131,6 +134,15 @@ function Cart(props) {
 			sessionStorage.setItem('travelCost', JSON.stringify(driveEV));
 		}
 
+		return (itemsTotalCost + travelCost).toFixed(2);
+	};
+
+	const calculateCost = () => {
+		const itemsTotalCost = Object.values(itemCosts).reduce(
+			(acc, cost) => acc + parseFloat(cost),
+			0
+		);
+		let travelCost = 0;
 		return (itemsTotalCost + travelCost).toFixed(2);
 	};
 
@@ -251,20 +263,27 @@ function Cart(props) {
 
 			{/* Total Cost */}
 			<p className="mt-6">
+				Items in cart: {calculateCost()} {currencyCode}
+			</p>
+
+			{/* Total Cost */}
+			<p className="mt-6">
 				Total Cost: {calculateTotalCost()} {currencyCode}
 			</p>
 
-			{/* Final Submit Button */}
-			<button
-				className="p-2 text-white font-bold rounded bg-blue-500 mt-10 hover:bg-blue-600 transition-colors"
-				onClick={() =>
-					onDisplayCartChange({ displayCart: false, showSummary: true })
-				}>
-				Go to Summary
-			</button>
+			{/* Display Cart Button */}
+			{travelOption && ( // This line checks if travelOption has a value (either 'gas' or 'ev')
+				<button
+					className="p-2 text-white font-bold rounded bg-blue-500 mt-10 hover:bg-blue-600 transition-colors"
+					onClick={() =>
+						onDisplayCartChange({ displayCart: false, showSummary: true })
+					}>
+					Go to Summary
+				</button>
+			)}
+			<ProgressBar progress={progress} />
 		</div>
 	);
-
 }
 
 export default Cart;

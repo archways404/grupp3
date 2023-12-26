@@ -3,6 +3,7 @@
 import { useState, useEffect } from 'react';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import ProgressBar from './ProgressBar';
 
 function Products(props) {
 	// Values
@@ -12,6 +13,8 @@ function Products(props) {
 	const [currencyCode, setCurrencyCode] = useState('');
 	const [selectedProducts, setSelectedProducts] = useState([]);
 	const { onDisplayProductsChange } = props; // Destructure the prop
+
+	const progress = 30;
 
 	useEffect(() => {
 		// Retrieve and parse the data from sessionStorage
@@ -168,6 +171,7 @@ function Products(props) {
 					))}
 				</div>
 			</div>
+			<ProgressBar progress={progress} />
 		</>
 	);
 }
