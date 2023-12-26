@@ -46,7 +46,7 @@ app.post('/api/Search', async (req, res) => {
 	const cord_lat = req.body.cord_lat;
 	try {
 		const response_country = await fetch(
-			`https://geocode.maps.co/reverse?lat=${cord_lat}&lon=${cord_long}`,
+			`https://geocode.maps.co/reverse?lat=${cord_lat}&lon=${cord_long}&api_key=${process.env.GEOCODE_KEY}`,
 			{
 				method: 'GET',
 				headers: {
