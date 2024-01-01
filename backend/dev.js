@@ -109,6 +109,7 @@ app.post('/api/Search', async (req, res) => {
 app.post('/api/StoreLocation', async (req, res) => {
 	const user_location_longitude = req.body.location_longitude;
 	const user_location_latitude = req.body.location_latitude;
+
 	console.log(
 		'🚀 ~ file: dev.js:142 ~ app.post ~ user_location_longitude:',
 		user_location_longitude
@@ -237,8 +238,12 @@ app.post('/api/apiSearchTest', async (req, res) => {
 });
 
 app.post('/api/getStoreLocation', async (req, res) => {
-	const user_location_longitude = req.body.location_longitude;
-	const user_location_latitude = req.body.location_latitude;
+  const location = req.body.location;
+	const cordinates = await locationFn.getCordinates(location);
+	console.log('🚀 ~ file: dev.js:243 ~ app.post ~ cordinates:', cordinates);
+
+	const user_location_longitude = cordinates.longitude;
+	const user_location_latitude = cordinates.latitude;
 	console.log(
 		'🚀 ~ file: dev.js:142 ~ app.post ~ user_location_longitude:',
 		user_location_longitude
