@@ -1,5 +1,5 @@
 
-# G3
+# DK-INT
 
 A simple website to plan a trip to Denmark and purchase beer with pricing information & approximate travel costs.
 
