@@ -1,5 +1,8 @@
+const dotenv = require('dotenv');
+dotenv.config();
+
 async function getExchangeRates() {
-	const url = `https://api.freecurrencyapi.com/v1/latest?apikey=fca_live_idqSqybb0N7gcBe4CoUKxCvvOKmC45JIfbPyQAR8`;
+	const url = `https://api.freecurrencyapi.com/v1/latest?apikey=${process.env.FREE_CURRENCY_KEY}`;
 	try {
 		const response = await fetch(url);
 		const fullData = await response.json();
@@ -12,7 +15,7 @@ async function getExchangeRates() {
 }
 
 async function getConverstionRateToUSD() {
-	const url = `https://api.freecurrencyapi.com/v1/latest?apikey=fca_live_idqSqybb0N7gcBe4CoUKxCvvOKmC45JIfbPyQAR8`;
+	const url = `https://api.freecurrencyapi.com/v1/latest?apikey=${process.env.FREE_CURRENCY_KEY}`;
 	try {
 		const response = await fetch(url);
 		const fullData = await response.json();

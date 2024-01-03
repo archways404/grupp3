@@ -1,8 +1,6 @@
 /* eslint-disable react/prop-types */
 /* eslint-disable no-unused-vars */
 import { useState, useEffect } from 'react';
-import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
 import ProgressBar from './ProgressBar';
 
 function Products(props) {
@@ -38,15 +36,6 @@ function Products(props) {
 		}
 	}, []);
 
-	const contextClass = {
-		success: 'bg-green-700',
-		error: 'bg-red-700',
-		info: 'bg-gray-700',
-		warning: 'bg-orange-500',
-		default: 'bg-indigo-700',
-		dark: 'bg-white-600 font-gray-300',
-	};
-
 	const handleCurrencyChange = (event) => {
 		const selectedCurrencyCode = event.target.value;
 		const selectedRate = allRates[selectedCurrencyCode];
@@ -77,23 +66,11 @@ function Products(props) {
 			onDisplayProductsChange({ display: false });
 		} catch (err) {
 			console.log(err);
-			toast.error(`Response from backend: \n ${err}`, {
-				position: toast.POSITION.TOP_CENTER,
-			});
 		}
 	};
 
 	return (
 		<>
-			<ToastContainer
-				toastClassName={({ type }) =>
-					contextClass[type || 'dark'] +
-					' relative flex p-1 min-h-10 rounded-md justify-between overflow-hidden cursor-pointer'
-				}
-				bodyClassName={() => 'text-sm font-white font-med block p-3'}
-				position="bottom-left"
-				autoClose={3000}
-			/>
 			<div className="flex flex-col justify-start items-center pt-10 bg-gray-950 min-h-screen">
 				{/* Currency Dropdown */}
 				<div className="currency-selector mb-6">

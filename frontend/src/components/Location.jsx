@@ -1,8 +1,6 @@
 /* eslint-disable react/prop-types */
 /* eslint-disable no-unused-vars */
 import { useState, useEffect } from 'react';
-import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
 import ProgressBar from './ProgressBar';
 
 function Location(props) {
@@ -72,43 +70,16 @@ function Location(props) {
 				console.log(cords);
 				sessionStorage.setItem('latitude', cords.latitude);
 				sessionStorage.setItem('longitude', cords.longitude);
-				toast.success(
-					`Backend: Latitude:${cords.latitude}, Longitude:${cords.longitude}`,
-					{
-						position: toast.POSITION.TOP_CENTER,
-					}
-				);
 				// reutrn value to parent
 				onDisplayLocationChange(false);
 			}
 		} catch (err) {
 			console.log(err);
-			toast.error(`Response from backend: \n ${err}`, {
-				position: toast.POSITION.TOP_CENTER,
-			});
 		}
-	};
-
-	const contextClass = {
-		success: 'bg-green-700',
-		error: 'bg-red-700',
-		info: 'bg-gray-700',
-		warning: 'bg-orange-500',
-		default: 'bg-indigo-700',
-		dark: 'bg-white-600 font-gray-300',
 	};
 
 	return (
 		<>
-			<ToastContainer
-				toastClassName={({ type }) =>
-					contextClass[type || 'dark'] +
-					' relative flex p-1 min-h-10 rounded-md justify-between overflow-hidden cursor-pointer'
-				}
-				bodyClassName={() => 'text-sm font-white font-med block p-3'}
-				position="bottom-left"
-				autoClose={3000}
-			/>
 			<div className="flex justify-center items-center h-screen bg-gray-950">
 				{/* Form Container with Shadow and Padding */}
 				<div className="p-8 bg-gray-800 rounded-lg shadow-xl">

@@ -31,7 +31,6 @@ const ProductArray = mongoose.model('ProductArray', arraySchema);
 async function viewDatabaseContents() {
 	try {
 		const allData = await ProductArray.find();
-		//console.log('Database Contents:', JSON.stringify(allData, null, 2));
 		return JSON.stringify(allData, null, 2);
 	} catch (err) {
 		console.error('Error fetching data from the database:', err);

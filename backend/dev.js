@@ -122,7 +122,7 @@ app.post('/api/StoreLocation', async (req, res) => {
 		const options = {
 			method: 'GET',
 			headers: {
-				Authorization: `Bearer ${process.env.SALLING_KEY}`,
+				Authorization: `Bearer ${process.env.SALLING_BEARER_TOKEN}`,
 			},
 		};
 		// Fetching stores from Salling Group API
