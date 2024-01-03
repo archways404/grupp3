@@ -40,13 +40,10 @@ function Location(props) {
 					console.log(result);
 					if (result.state === 'granted') {
 						navigator.geolocation.getCurrentPosition(success, errors, options);
-						//If granted then you can directly call your function here
 					} else if (result.state === 'prompt') {
 						navigator.geolocation.getCurrentPosition(success, errors, options);
-						//If prompt then the user will be asked to give permission
 					} else if (result.state === 'denied') {
 						navigator.geolocation.getCurrentPosition(success, errors, options);
-						//If denied then you have to show instructions to enable location
 					}
 				});
 		} else {
@@ -131,13 +128,16 @@ function Location(props) {
 								className="flex-1 bg-green-500 hover:bg-green-600 text-black py-2 px-4 rounded-md transition duration-300 ease-in-out transform hover:scale-105">
 								Next
 							</button>
-							<button
-								className="flex-1 bg-green-500 hover:bg-green-600 text-black py-2 px-4 rounded-md transition duration-300 ease-in-out transform hover:scale-105"
-								onClick={fetchLocation}>
-								Fetch Location
-							</button>
 						</div>
 					</form>
+					<br></br>
+					<div className="flex space-x-3">
+						<button
+							className="flex-1 bg-green-500 hover:bg-green-600 text-black py-2 px-4 rounded-md transition duration-300 ease-in-out transform hover:scale-105"
+							onClick={fetchLocation}>
+							Fetch Location
+						</button>
+					</div>
 				</div>
 			</div>
 			<ProgressBar progress={progress} />
