@@ -7,8 +7,6 @@ A simple website to plan a trip to Denmark and purchase beer with pricing inform
 
 [![](https://img.shields.io/badge/API_Documentation-100000?style=for-the-badge&logo=googledocs&logoColor=2BFF00&labelColor=22272e&color=22272e)](https://github.com/archways404/grupp3/blob/main/docs/doc_API.md)
 
-[![](https://img.shields.io/badge/Coding_GUIDELINES-100000?style=for-the-badge&logo=googledocs&logoColor=2BFF00&labelColor=22272e&color=22272e)](https://github.com/archways404/grupp3/blob/main/docs/doc_guidelines.md)
-
 [![](https://img.shields.io/badge/Backend_Documentation-100000?style=for-the-badge&logo=googledocs&logoColor=2BFF00&labelColor=22272e&color=22272e)](https://github.com/archways404/grupp3/blob/main/docs/doc_backend.md)
 
 [![](https://img.shields.io/badge/Frontend_Documentation-100000?style=for-the-badge&logo=googledocs&logoColor=2BFF00&labelColor=22272e&color=22272e)](https://github.com/archways404/grupp3/blob/main/docs/doc_frontend.md)

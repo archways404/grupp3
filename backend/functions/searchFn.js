@@ -31,7 +31,6 @@ const ProductArray = mongoose.model('ProductArray', arraySchema);
 async function viewDatabaseContents() {
 	try {
 		const allData = await ProductArray.find();
-		//console.log('Database Contents:', JSON.stringify(allData, null, 2));
 		return JSON.stringify(allData, null, 2);
 	} catch (err) {
 		console.error('Error fetching data from the database:', err);
@@ -85,26 +84,6 @@ function convertPrice(products, conversionRate) {
 	});
 	return convertedProducts;
 }
-
-/*
-async function main() {
-	const products = await convertProducts();
-	// Now you can use 'products' to find specific products
-	const product_ids = getProductById(products, '42442');
-	console.log(product_ids);
-	const product_name = getProductByName(products, 'tuborg classic');
-	console.log(product_name);
-
-	const allPrices = await getPrices(products);
-	console.log(allPrices);
-
-	const conversionRate = 6.81; // This is your external price factor
-	const updatedProducts = convertPrice(products, conversionRate);
-	console.log(updatedProducts);
-}
-
-main();
-*/
 
 module.exports = {
 	viewDatabaseContents,
