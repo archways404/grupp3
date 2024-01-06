@@ -110,21 +110,21 @@ function Summary(props) {
 	}, [selectedProducts, orderAmount, exchangeRate]);
 
 	return (
-		<div className="flex flex-col justify-start items-center pt-10 bg-gray-950 min-h-screen text-white">
-			<h1 className="text-3xl font-bold mb-6">Summary Page</h1>
+		<div className="flex flex-col justify-start items-center pt-10 bg-gray-900 min-h-screen text-white">
+			<h1 className="text-green-500 text-4xl font-bold mb-6">Summary Page</h1>
 
 			{/* Currency Dropdown */}
-			<div className="currency-selector mb-6 bg-gray-950 p-4 rounded-lg">
+			<div className="currency-selector mb-6 bg-gray-800 p-4 rounded-lg">
 				<label
 					htmlFor="currency-select"
-					className="mr-2">
+					className="mr-2 text-green-500">
 					Choose Currency:
 				</label>
 				<select
 					id="currency-select"
 					onChange={handleCurrencyChange}
 					value={currencyCode}
-					className="p-2 rounded bg-gray-950 text-white">
+					className="p-2 rounded bg-gray-700 text-white">
 					{Object.keys(allRates).map((code) => (
 						<option
 							key={code}
@@ -182,14 +182,17 @@ function Summary(props) {
 					2
 				)} ${currencyCode}`}</p>
 			</div>
+
+			{/* Print Receipt Button */}
 			<button
 				onClick={() => window.print()}
-				className="p-2 text-black font-bold rounded bg-blue-500 mt-4 hover:bg-blue-600 transition-colors">
+				className="p-2 text-black rounded bg-green-600 hover:bg-green-700 mt-4 hover:font-bold transition-colors">
 				Print Receipt
 			</button>
 			<ProgressBar progress={progress} />
 		</div>
 	);
+
 }
 
 export default Summary;

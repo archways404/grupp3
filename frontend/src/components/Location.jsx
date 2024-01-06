@@ -80,14 +80,19 @@ function Location(props) {
 
 	return (
 		<>
-			<div className="flex justify-center items-center h-screen bg-gray-950">
-				{/* Form Container with Shadow and Padding */}
-				<div className="p-8 bg-gray-800 rounded-lg shadow-xl">
+			<div className="flex justify-center items-center h-screen bg-gray-900">
+				{/* Main Container with a More Modern Layout */}
+				<div className="w-full max-w-md p-6 bg-gray-800 rounded-lg shadow-xl">
+					<h1 className="text-green-500 text-4xl font-bold mb-6 text-center">
+						DK BEER INTERNATIONAL
+					</h1>
+
+					{/* Form Container */}
 					<form
 						onSubmit={handleLocationSubmit}
-						className="flex flex-col items-center space-y-4">
+						className="flex flex-col space-y-4">
 						<input
-							className="w-full h-12 px-4 rounded-md bg-gray-950 text-gray-200 focus:outline-none focus:ring-2 focus:ring-green-500"
+							className="w-full h-12 px-4 rounded-md bg-gray-700 text-gray-300 border border-gray-600 focus:border-green-500 focus:outline-none"
 							placeholder="Enter your location"
 							type="text"
 							value={location}
@@ -96,24 +101,22 @@ function Location(props) {
 						<div className="flex space-x-3">
 							<button
 								type="submit"
-								className="flex-1 bg-green-500 hover:bg-green-600 text-black py-2 px-4 rounded-md transition duration-300 ease-in-out transform hover:scale-105">
+								className="flex-1 bg-green-600 hover:bg-green-700 hover:font-bold text-black py-2 px-4 rounded-md transition duration-300 ease-in-out">
 								Next
+							</button>
+							<button
+								className="flex-1 bg-green-600 hover:bg-green-700 hover:font-bold text-black py-2 px-4 rounded-md transition duration-300 ease-in-out"
+								onClick={fetchLocation}>
+								Fetch Location
 							</button>
 						</div>
 					</form>
-					<br></br>
-					<div className="flex space-x-3">
-						<button
-							className="flex-1 bg-green-500 hover:bg-green-600 text-black py-2 px-4 rounded-md transition duration-300 ease-in-out transform hover:scale-105"
-							onClick={fetchLocation}>
-							Fetch Location
-						</button>
-					</div>
 				</div>
 			</div>
 			<ProgressBar progress={progress} />
 		</>
 	);
+
 }
 
 export default Location;

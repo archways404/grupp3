@@ -64,27 +64,33 @@ function Search(props) {
 
 	return (
 		<>
-			<div className="flex justify-center items-center h-screen bg-gray-950">
-				<div className="p-8 bg-gray-800 rounded-lg shadow-xl">
+			<div className="flex justify-center items-center h-screen bg-gray-900">
+				{/* Main Container with a Consistent Modern Layout */}
+				<div className="w-full max-w-md p-6 bg-gray-800 rounded-lg shadow-xl">
+					<h1 className="text-green-500 text-4xl font-bold mb-6 text-center">
+						DK BEER INTERNATIONAL
+					</h1>
+
+					{/* Form Container */}
 					<form
 						onSubmit={handleSearchSubmit}
-						className="flex flex-col items-center space-y-4">
+						className="flex flex-col space-y-4">
 						<input
-							className="w-full h-12 px-4 rounded-md bg-gray-950 text-gray-200 focus:outline-none focus:ring-2 focus:ring-green-500"
-							placeholder="Search for beers"
+							className="w-full h-12 px-4 rounded-md bg-gray-700 text-gray-300 border border-gray-600 focus:border-green-500 focus:outline-none"
+							placeholder="Search for beers (blank search for all)"
 							type="text"
 							value={searchValue}
 							onChange={handleChangeSearch}
 						/>
-						<div className="flex space-x-3 w-full">
+						<div className="flex space-x-3">
 							<button
 								type="submit"
-								className="bg-green-500 hover:bg-green-600 text-black py-2 px-4 rounded-md transition duration-300 ease-in-out transform hover:scale-105 flex-grow">
+								className="flex-1 bg-green-600 hover:bg-green-700 text-black py-2 px-4 rounded-md transition duration-300 ease-in-out hover:font-bold">
 								Search
 							</button>
 							<button
 								onClick={() => onDisplaySearchChange({ display: true })}
-								className="bg-red-500 hover:bg-red-600 text-black py-2 px-4 rounded-md transition duration-300 ease-in-out transform hover:scale-105 flex-grow">
+								className="flex-1 bg-red-600 hover:bg-red-700 text-black hover:font-bold py-2 px-4 rounded-md transition duration-300 ease-in-out">
 								Back
 							</button>
 						</div>

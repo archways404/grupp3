@@ -71,19 +71,19 @@ function Products(props) {
 
 	return (
 		<>
-			<div className="flex flex-col justify-start items-center pt-10 bg-gray-950 min-h-screen">
+			<div className="flex flex-col justify-start items-center pt-10 bg-gray-900 min-h-screen">
 				{/* Currency Dropdown */}
 				<div className="currency-selector mb-6">
 					<label
 						htmlFor="currency-select"
-						className="text-white mr-2">
+						className="text-green-500 mr-2">
 						Choose Currency:
 					</label>
 					<select
 						id="currency-select"
 						onChange={handleCurrencyChange}
 						value={currencyCode}
-						className="p-2 rounded border border-white bg-gray-950 text-white">
+						className="p-2 rounded border border-green-500 bg-gray-800 text-white">
 						{Object.keys(allRates).map((code) => (
 							<option
 								key={code}
@@ -96,7 +96,7 @@ function Products(props) {
 
 				{/* Cart Button */}
 				<button
-					className="p-2 text-black font-bold rounded bg-blue-500 absolute top-0 right-0 m-4"
+					className="p-2 text-white font-bold rounded bg-green-600 hover:bg-green-700 absolute top-0 right-0 m-4"
 					onClick={handleDisplayCart}>
 					Cart ({selectedProducts.length})
 				</button>
@@ -106,13 +106,8 @@ function Products(props) {
 					{products.map((product) => (
 						<div
 							key={product.prod_id}
-							className="card bg-white rounded-lg shadow-lg overflow-hidden"
-							style={{ maxWidth: 'calc(100% * 1 / 2)' }}>
-							{' '}
-							{/* Reduced card width */}
+							className="card bg-gray-800 rounded-lg shadow-lg overflow-hidden">
 							<div className="h-24 w-full flex items-center justify-center">
-								{' '}
-								{/* Adjusted image container height */}
 								<img
 									src={product.img}
 									alt={product.title}
@@ -120,19 +115,17 @@ function Products(props) {
 								/>
 							</div>
 							<div className="card-body p-5 flex flex-col justify-between">
-								{' '}
-								{/* Adjusted padding */}
-								<h5 className="card-title text-lg font-semibold truncate">
+								<h5 className="card-title text-lg font-semibold text-white truncate">
 									{product.title}
 								</h5>
-								<p className="card-price text-lg font-bold">
+								<p className="card-price text-lg font-bold text-green-500">
 									{(product.price * exchangeRate).toFixed(2)} {currencyCode}
 								</p>
 								<button
 									className={`p-1 text-white font-bold rounded text-sm ${
 										selectedProducts.some((p) => p.prod_id === product.prod_id)
-											? 'bg-red-500 hover:bg-red-600'
-											: 'bg-green-500 hover:bg-green-600'
+											? 'bg-red-600 hover:bg-red-700'
+											: 'bg-green-600 hover:bg-green-700'
 									}`}
 									onClick={() => {
 										selectedProducts.some((p) => p.prod_id === product.prod_id)

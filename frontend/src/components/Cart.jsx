@@ -147,19 +147,19 @@ function Cart(props) {
 	};
 
 	return (
-		<div className="flex flex-col justify-start items-center pt-10 bg-gray-950 min-h-screen text-white">
+		<div className="flex flex-col justify-start items-center pt-10 bg-gray-900 min-h-screen text-white">
 			{/* Currency Dropdown */}
 			<div className="currency-selector mb-6 bg-gray-800 p-4 rounded-lg">
 				<label
 					htmlFor="currency-select"
-					className="mr-2">
+					className="text-green-500 mr-2">
 					Choose Currency:
 				</label>
 				<select
 					id="currency-select"
 					onChange={handleCurrencyChange}
 					value={currencyCode}
-					className="p-2 rounded border bg-gray-950 text-white">
+					className="p-2 rounded border border-green-500 bg-gray-700 text-white">
 					{Object.keys(allRates).map((code) => (
 						<option
 							key={code}
@@ -195,7 +195,7 @@ function Cart(props) {
 									onChange={(e) =>
 										handleQuantityChange(product.prod_id, e.target.value)
 									}
-									className="p-2 rounded border border-white bg-gray-950 text-white">
+									className="p-2 rounded border border-gray-600 bg-gray-700 text-white">
 									{Array.from({ length: 20 }, (_, i) => i + 0).map((amount) => (
 										<option
 											key={amount}
@@ -212,7 +212,7 @@ function Cart(props) {
 							</div>
 							<div>
 								<p>
-									Calculated Price for the Item:{' '}
+									Calculated Price for the Item:
 									{(
 										product.price *
 										exchangeRate *
@@ -229,7 +229,7 @@ function Cart(props) {
 			{/* Submit Button */}
 			{!submitClicked && (
 				<button
-					className="p-2 text-white font-bold rounded bg-blue-500 mt-10 hover:bg-blue-600 transition-colors"
+					className="p-2 text-white font-bold rounded bg-green-600 hover:bg-green-700 mt-10 transition-colors"
 					onClick={handleSubmit}>
 					Submit
 				</button>
@@ -272,9 +272,9 @@ function Cart(props) {
 			</p>
 
 			{/* Display Cart Button */}
-			{travelOption && ( // This line checks if travelOption has a value (either 'gas' or 'ev')
+			{travelOption && (
 				<button
-					className="p-2 text-white font-bold rounded bg-blue-500 mt-10 hover:bg-blue-600 transition-colors"
+					className="p-2 text-white font-bold rounded bg-green-600 hover:bg-green-700 mt-10 transition-colors"
 					onClick={() =>
 						onDisplayCartChange({ displayCart: false, showSummary: true })
 					}>
@@ -284,6 +284,7 @@ function Cart(props) {
 			<ProgressBar progress={progress} />
 		</div>
 	);
+
 }
 
 export default Cart;
