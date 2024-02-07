@@ -10,6 +10,7 @@ const calcFn = require('./functions/calcFn.js');
 const locationFn = require('./functions/locationFn.js');
 const searchFn = require('./functions/searchFn.js');
 const currencyFn = require('./functions/currencyFn.js');
+const flightFn = require('./functions/flightFn.js');
 
 // Configuration for the port
 const port = 9999;
@@ -166,6 +167,14 @@ app.post('/api/StoreLocation', async (req, res) => {
 	}
 });
 
+app.post('/api/flightSearch', async (req, res) => {
+	const cc = req.body.cc;
+	const kword = req.body.kword;
+	const resp = await flightFn.getFlightData(cc, kword);
+
+	res.status(200).send(resp);
+});
+
 // Routes for API //
 // Returns Coordinates for the area given
 app.post('/api/getLocation', async (req, res) => {
@@ -296,6 +305,7 @@ app.post('/api/getStoreLocation', async (req, res) => {
 		res.status(500).send('An error occurred');
 	}
 });
+
 // Configuration for the server
 http.createServer(app).listen(port, () => {
 	console.log(`Server is running on port: ${port}`);

@@ -1,5 +1,5 @@
 async function getAirPorts(CC, kword) {
-	const bearerToken = ''; // Replace with your actual token
+	const bearerToken = 'whSekiT9DWEGB1mADixJllPiRLo5'; // Replace with your actual token
 	const url = `https://test.api.amadeus.com/v1/reference-data/locations/cities?countryCode=${CC}&keyword=${kword}&include=AIRPORTS`;
 
 	try {
@@ -19,7 +19,7 @@ async function getAirPorts(CC, kword) {
 }
 
 async function getFlights(origin, destination, date, returnDate) {
-	const bearerToken = ''; // Replace with your actual token
+	const bearerToken = 'whSekiT9DWEGB1mADixJllPiRLo5'; // Replace with your actual token
 	const url = `https://test.api.amadeus.com/v2/shopping/flight-offers?originLocationCode=${origin}&destinationLocationCode=${destination}&departureDate=${date}returnDate=${returnDate}&adults=1`;
 
 	try {
