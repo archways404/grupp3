@@ -113,6 +113,41 @@ app.post('/api/Search', async (req, res) => {
 		return error;
 	}
 });
+
+//! WORK IN PROGRESS
+app.post('/api/getCodes', async (req, res) => {
+	const cord_long = req.body.cord_long;
+	const cord_lat = req.body.cord_lat;
+	try {
+		// Get country name from coordinates
+		const response_country = await fetch(
+			`https://geocode.maps.co/reverse?lat=${cord_lat}&lon=${cord_long}&api_key=${process.env.GEOCODE_KEY}`,
+			{
+				method: 'GET',
+				headers: {
+					'Content-Type': 'application/json',
+				},
+			}
+		);
+		const data = await response_country.json();
+		const countryName = data.address.country;
+		const country_code = data.address.country_code;
+		const city = data.address.city;
+		// Get currency code from country
+
+		res.status(200).send({
+			//data: data,
+			countryName: countryName,
+			country_code: country_code,
+			city: city,
+		});
+	} catch (error) {
+		console.error(error);
+		return error;
+	}
+});
+//! WORK IN PROGRESS
+
 // Determining the closest store
 app.post('/api/StoreLocation', async (req, res) => {
 	// location_longitude, location_latitude are input parameters from frontend
