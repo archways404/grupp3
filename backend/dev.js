@@ -206,6 +206,7 @@ app.post('/api/getFlights', async (req, res) => {
 	const dates = await flightFn.getDates();
 
 	// INPUT PARAMS
+	//rova!
 	const origin = req.body.origin;
 	const destination = req.body.destination;
 
