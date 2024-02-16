@@ -291,7 +291,7 @@ app.post('/api/StoreLocation', async (req, res) => {
 app.post('/api/flightSearch', async (req, res) => {
 	const cc = req.body.cc;
 	const kword = req.body.kword;
-	const resp = await flightFn.getFlightData(cc, kword);
+	const resp = await flightFn.getFlightData();
 
 	res.status(200).send(resp);
 });

@@ -47,7 +47,7 @@ async function getAirports(CC, kword) {
 
 // GET THE FLIGHTS
 async function getFlights(origin, destination, date, returnDate) {
-	const bearerToken = process.env.AMADEUS_TOKEN; // Replace with your actual token
+	const bearerToken = await getBearerToken(); // Replace with your actual token
 	const url = `https://test.api.amadeus.com/v2/shopping/flight-offers?originLocationCode=${origin}&destinationLocationCode=${destination}&departureDate=${date}returnDate=${returnDate}&adults=1&max=1`;
 
 	try {
@@ -65,11 +65,38 @@ async function getFlights(origin, destination, date, returnDate) {
 	}
 }
 
+async function getBearerToken() {
+	const url = 'https://test.api.amadeus.com/v1/security/oauth2/token';
+	const client_id = process.env.AMADEUS_CLIENT_ID;
+	const client_secret = process.env.AMADEUS_CLIENT_SECRET;
+	const grant_type = 'client_credentials';
+
+	try {
+		const response = await fetch(url, {
+			method: 'POST',
+			headers: {
+				'Content-Type': 'application/x-www-form-urlencoded',
+			},
+			body: `client_id=${client_id}&client_secret=${client_secret}&grant_type=${grant_type}`,
+		});
+		const data = await response.json();
+		return { data: data.access_token };
+	} catch (error) {
+		console.error(error);
+		return null;
+	}
+}
+
 // GET THE FLIGHT DATA (AIRPORTS, ETC.)
-async function getFlightData(cc, kword) {
+async function getFlightData() {
+
+	const getCodes = await fetch('/api/getCodes')
+	const cc = getCodes.response.location.countryCode;
+	const kword = getCodes.response.location.city;
 	const resp = await getAirports(cc, kword);
 	// Assuming resp.data contains the response structure you provided
 	const airportData = resp.data.included.airports;
+	console.log(airportData);
 
 	// Create an array of airports from the airportData object
 	const airports = Object.keys(airportData).map((key) => {
@@ -85,6 +112,8 @@ async function getFlightData(cc, kword) {
 	});
 	return airports;
 }
+
+
 
 module.exports = {
 	getAirports,

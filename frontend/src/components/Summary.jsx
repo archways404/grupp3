@@ -156,6 +156,12 @@ function Summary(props) {
 				})}
 			</div>
 
+			{/* Origin Details */}
+			<div className="travel-cost mt-6 w-full max-w-4xl bg-gray-800 p-4 rounded-lg shadow-lg">
+				<p>{`City: ${closestStore.city}`}</p>
+				<p>{`Airport: ${closestStore.country}`}</p>
+			</div>
+
 			{/* Closest Store Details */}
 			<div className="travel-cost mt-6 w-full max-w-4xl bg-gray-800 p-4 rounded-lg shadow-lg">
 				<p>{`City: ${closestStore.city}`}</p>
