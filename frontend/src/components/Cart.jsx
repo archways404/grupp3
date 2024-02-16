@@ -19,6 +19,7 @@ function Cart(props) {
 	const [travelOption, setTravelOption] = useState('');
 	const [driveGas, setDriveGas] = useState('');
 	const [driveEV, setDriveEV] = useState('');
+	const [driveFlight, setDriveFlight] = useState('');
 	const [renderTravel, setRenderTravel] = useState(false);
 	const [priceToDrive, setPriceToDrive] = useState('');
 	const [submitClicked, setSubmitClicked] = useState(false);
@@ -132,7 +133,11 @@ function Cart(props) {
 		} else if (travelOption === 'ev') {
 			travelCost = parseFloat(driveEV);
 			sessionStorage.setItem('travelCost', JSON.stringify(driveEV));
+		} else if (travelOption === 'flight') {
+			travelCost = parseFloat(driveFlight);
+			sessionStorage.setItem('travelCost', JSON.stringify(100));
 		}
+
 
 		return (itemsTotalCost + travelCost).toFixed(2);
 	};
@@ -257,6 +262,16 @@ function Cart(props) {
 							className="mr-2"
 						/>
 						EV
+					</label>
+					<label>
+						<input
+							type="radio"
+							value="flight"
+							checked={travelOption === 'flight'}
+							onChange={handleTravelOptionChange}
+							className="mr-2"
+						/>
+						Flight
 					</label>
 				</div>
 			)}

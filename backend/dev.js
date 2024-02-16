@@ -206,7 +206,7 @@ app.post('/api/getFlights', async (req, res) => {
 	const dates = await flightFn.getDates();
 
 	// INPUT PARAMS
-	//rov!
+
 	const origin = req.body.origin;
 	const destination = req.body.destination;
 
@@ -224,6 +224,7 @@ app.post('/api/getFlights', async (req, res) => {
 		);
 
 		// MODIFY RESPONSE HERE TO GET THE DATA WE WANT
+		console.log(response.data.price.total);
 
 		res.status(200).send(response.data);
 	} catch (error) {

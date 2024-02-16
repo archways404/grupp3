@@ -48,7 +48,7 @@ async function getAirports(CC, kword) {
 // GET THE FLIGHTS
 async function getFlights(origin, destination, date, returnDate) {
 	const bearerToken = process.env.AMADEUS_TOKEN; // Replace with your actual token
-	const url = `https://test.api.amadeus.com/v2/shopping/flight-offers?originLocationCode=${origin}&destinationLocationCode=${destination}&departureDate=${date}returnDate=${returnDate}&adults=1`;
+	const url = `https://test.api.amadeus.com/v2/shopping/flight-offers?originLocationCode=${origin}&destinationLocationCode=${destination}&departureDate=${date}returnDate=${returnDate}&adults=1&max=1`;
 
 	try {
 		const response = await fetch(url, {
