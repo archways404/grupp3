@@ -1,100 +1,148 @@
+/* eslint-disable react/prop-types */
 /* eslint-disable no-unused-vars */
 import { useState, useEffect } from 'react';
-import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+import ProgressBar from './ProgressBar';
 
 function Products(props) {
 	// Values
-	const [searchValue, setSearchValue] = useState('');
-
+	const [products, setProducts] = useState([]);
+	const [allRates, setAllRates] = useState({}); // Changed to an object
+	const [exchangeRate, setExchangeRate] = useState('');
+	const [currencyCode, setCurrencyCode] = useState('');
+	const [selectedProducts, setSelectedProducts] = useState([]);
 	const { onDisplayProductsChange } = props; // Destructure the prop
 
-	const handleChangeSearch = (event) => {
-		setSearchValue(event.target.value);
+	const progress = 30;
+
+	useEffect(() => {
+		// Retrieve and parse the data from sessionStorage
+		const searchResults = sessionStorage.getItem('searchResults');
+		if (searchResults) {
+			const data = JSON.parse(searchResults);
+			setProducts(data.updatedProducts);
+			setAllRates(data.allRates);
+		}
+
+		const localExchangeRate = sessionStorage.getItem('localExchangeRate');
+		if (localExchangeRate) {
+			const data = JSON.parse(localExchangeRate);
+			setExchangeRate(data);
+		}
+
+		const localCurrencyCode = sessionStorage.getItem('localCurrencyCode');
+		if (localCurrencyCode) {
+			const data = JSON.parse(localCurrencyCode);
+			setCurrencyCode(data);
+		}
+	}, []);
+
+	const handleCurrencyChange = (event) => {
+		const selectedCurrencyCode = event.target.value;
+		const selectedRate = allRates[selectedCurrencyCode];
+		setExchangeRate(selectedRate || 1); // Fallback to 1 if the rate is not found
+		setCurrencyCode(selectedCurrencyCode);
 	};
 
-	const handleSearchSubmit = async (e) => {
-		e.preventDefault(); // Prevent default form submission behavior
+	const handleAddProduct = (product) => {
+		setSelectedProducts((prevSelectedProducts) => [
+			...prevSelectedProducts,
+			product,
+		]);
+	};
+
+	const handleRemoveProduct = (prodId) => {
+		setSelectedProducts((prevSelectedProducts) =>
+			prevSelectedProducts.filter((product) => product.prod_id !== prodId)
+		);
+	};
+
+	const handleDisplayCart = async () => {
 		try {
-			const response = await fetch('http://localhost:9999/api/test/', {
-				method: 'POST',
-				headers: {
-					'Content-Type': 'application/json',
-				},
-				body: JSON.stringify({ test: searchValue }),
-			});
-			if (response.status === 200) {
-				const data = await response.json();
-				const testData = data.test;
-				console.log(data.test);
-				toast.success(`Message recieved! ${testData}`, {
-					position: toast.POSITION.TOP_CENTER,
-				});
-				// reutrn value to parent
-				onDisplaySearchChange({ display: false, searchValue: searchValue });
-			}
+			sessionStorage.setItem(
+				'selectedProducts',
+				JSON.stringify(selectedProducts)
+			);
+			console.log('selectedProducts: ', selectedProducts);
+			onDisplayProductsChange({ display: false });
 		} catch (err) {
 			console.log(err);
-			toast.error(`Response from backend: \n ${err}`, {
-				position: toast.POSITION.TOP_CENTER,
-			});
 		}
-	};
-
-	const contextClass = {
-		success: 'bg-green-700',
-		error: 'bg-red-700',
-		info: 'bg-gray-700',
-		warning: 'bg-orange-500',
-		default: 'bg-indigo-700',
-		dark: 'bg-white-600 font-gray-300',
 	};
 
 	return (
 		<>
-			<ToastContainer
-				toastClassName={({ type }) =>
-					contextClass[type || 'dark'] +
-					' relative flex p-1 min-h-10 rounded-md justify-between overflow-hidden cursor-pointer'
-				}
-				bodyClassName={() => 'text-sm font-white font-med block p-3'}
-				position="bottom-left"
-				autoClose={3000}
-			/>
-			<div className="flex justify-center items-center h-screen bg-slate-700">
-				<ToastContainer
-					toastClassName={({ type }) =>
-						contextClass[type || 'dark'] +
-						' relative flex p-1 min-h-10 rounded-md justify-between overflow-hidden cursor-pointer'
-					}
-					bodyClassName={() => 'text-sm font-white font-med block p-3'}
-					position="bottom-left"
-					autoClose={3000}
-				/>
-				<form
-					onSubmit={handleSearchSubmit}
-					className="flex flex-col items-center space-y-4">
-					<input
-						className="w-64 h-12 px-4 rounded-md bg-slate-800 text-gray-200"
-						placeholder="Search for beers"
-						type="text"
-						value={searchValue}
-						onChange={handleChangeSearch}
-					/>
-					<button
-						type="submit"
-						className="bg-green-500 hover:bg-green-600 text-black py-2 px-4 rounded">
-						Search
-					</button>
-					<button
-						onClick={() => onDisplaySearchChange({ display: true })}
-						className="bg-red-500 hover:bg-red-600 text-black py-2 px-4 rounded">
-						Back
-					</button>
-				</form>
+			<div className="flex flex-col justify-start items-center pt-10 bg-gray-900 min-h-screen">
+				{/* Currency Dropdown */}
+				<div className="currency-selector mb-6">
+					<label
+						htmlFor="currency-select"
+						className="text-green-500 mr-2">
+						Choose Currency:
+					</label>
+					<select
+						id="currency-select"
+						onChange={handleCurrencyChange}
+						value={currencyCode}
+						className="p-2 rounded border border-green-500 bg-gray-800 text-white">
+						{Object.keys(allRates).map((code) => (
+							<option
+								key={code}
+								value={code}>
+								{code}
+							</option>
+						))}
+					</select>
+				</div>
+
+				{/* Cart Button */}
+				<button
+					className="p-2 text-white font-bold rounded bg-green-600 hover:bg-green-700 absolute top-0 right-0 m-4"
+					onClick={handleDisplayCart}>
+					Cart ({selectedProducts.length})
+				</button>
+
+				{/* Product Cards Container */}
+				<div className="product-cards-container w-full px-4 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5">
+					{products.map((product) => (
+						<div
+							key={product.prod_id}
+							className="card bg-gray-800 rounded-lg shadow-lg overflow-hidden">
+							<div className="h-24 w-full flex items-center justify-center">
+								<img
+									src={product.img}
+									alt={product.title}
+									className="max-h-full max-w-full object-contain"
+								/>
+							</div>
+							<div className="card-body p-5 flex flex-col justify-between">
+								<h5 className="card-title text-lg font-semibold text-white truncate">
+									{product.title}
+								</h5>
+								<p className="card-price text-lg font-bold text-green-500">
+									{(product.price * exchangeRate).toFixed(2)} {currencyCode}
+								</p>
+								<button
+									className={`p-1 text-white font-bold rounded text-sm ${
+										selectedProducts.some((p) => p.prod_id === product.prod_id)
+											? 'bg-red-600 hover:bg-red-700'
+											: 'bg-green-600 hover:bg-green-700'
+									}`}
+									onClick={() => {
+										selectedProducts.some((p) => p.prod_id === product.prod_id)
+											? handleRemoveProduct(product.prod_id)
+											: handleAddProduct(product);
+									}}>
+									{selectedProducts.some((p) => p.prod_id === product.prod_id)
+										? 'Remove'
+										: 'Add to Cart'}
+								</button>
+							</div>
+						</div>
+					))}
+				</div>
 			</div>
+			<ProgressBar progress={progress} />
 		</>
 	);
 }
-
 export default Products;

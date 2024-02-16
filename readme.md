@@ -1,14 +1,11 @@
 
-# GROUP 3
+# DK-INT
 
-Introduction text
-
+A simple website to plan a trip to Denmark and purchase beer with pricing information & approximate travel costs.
 
 ## Documentation
 
 [![](https://img.shields.io/badge/API_Documentation-100000?style=for-the-badge&logo=googledocs&logoColor=2BFF00&labelColor=22272e&color=22272e)](https://github.com/archways404/grupp3/blob/main/docs/doc_API.md)
-
-[![](https://img.shields.io/badge/Coding_GUIDELINES-100000?style=for-the-badge&logo=googledocs&logoColor=2BFF00&labelColor=22272e&color=22272e)](https://github.com/archways404/grupp3/blob/main/docs/doc_guidelines.md)
 
 [![](https://img.shields.io/badge/Backend_Documentation-100000?style=for-the-badge&logo=googledocs&logoColor=2BFF00&labelColor=22272e&color=22272e)](https://github.com/archways404/grupp3/blob/main/docs/doc_backend.md)
 
@@ -34,6 +31,7 @@ node -v
 
 If you get something along the lines of:
 ```bash
+$ node -v
 v18.16.0
 ```
 Then you have installed NodeJS successfully and can proceed!

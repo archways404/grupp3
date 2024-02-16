@@ -6,11 +6,16 @@ import 'react-toastify/dist/ReactToastify.css';
 import Location from '../components/Location';
 import Search from '../components/Search';
 import Products from '../components/Products';
+import Cart from '../components/Cart';
+import Summary from '../components/Summary';
 
 function Main() {
 	// Rendering
 	const [displayLocation, setDisplayLocation] = useState(true);
 	const [displaySearch, setDisplaySearch] = useState(false);
+	const [displayProducts, setDisplayProducts] = useState(false);
+  const [displayCart, setDisplayCart] = useState(false);
+	const [displaySummary, setDisplaySummary] = useState(false);
 
 	function handleDisplayLocationChange(Location) {
 		console.log('Location: ', Location);
@@ -28,13 +33,36 @@ function Main() {
 		console.log('Search.searchValue: ', Search.searchValue);
 		if (Search.display === false) {
 			setDisplaySearch(false);
+			setDisplayProducts(true);
 		} else {
 			setDisplayLocation(true);
 		}
 	}
 
-	function handleDisplayProductsChange(newValue) {
-		console.log('newValue: ', newValue);
+	function handleDisplayProductsChange(Product) {
+		console.log('Search: ', Product);
+		console.log('Search.display: ', Product.display);
+		if (Product.display === false) {
+			setDisplayProducts(false);
+			setDisplayCart(true);
+		} else {
+			setDisplayLocation(true);
+		}
+	}
+
+	function handleDisplayCartChange(Cart) {
+		console.log('Cart.displayCart: ', Cart.displayCart);
+		console.log('Cart.showSummary: ', Cart.showSummary);
+		if (Cart.displayCart === false) {
+			setDisplayCart(false);
+			setDisplaySummary(true);
+		} else {
+			setDisplayCart(true);
+		}
+	}
+
+	function handleDisplaySummaryChange(Summary) {
+		console.log('Summary: ', Summary);
 	}
 
 	const contextClass = {
@@ -63,8 +91,12 @@ function Main() {
 			{displaySearch && (
 				<Search onDisplaySearchChange={handleDisplaySearchChange} />
 			)}
-			{!displaySearch && (
-				<Search onDisplayProductsChange={handleDisplayProductsChange} />
+			{displayProducts && (
+				<Products onDisplayProductsChange={handleDisplayProductsChange} />
+			)}
+			{displayCart && <Cart onDisplayCartChange={handleDisplayCartChange} />}
+			{displaySummary && (
+				<Summary onDisplaySummaryChange={handleDisplaySummaryChange} />
 			)}
 		</>
 	);
