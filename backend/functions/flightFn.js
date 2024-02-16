@@ -1,6 +1,30 @@
 const dotenv = require('dotenv');
 dotenv.config();
 
+// GENERATE THE TRAVEL DATES
+async function getDates() {
+	// Get the current date
+	let currentDate = new Date();
+
+	// Format the date as "YYYYMMDD"
+	let date =
+		currentDate.getFullYear().toString() +
+		('0' + (currentDate.getMonth() + 1)).slice(-2) +
+		('0' + currentDate.getDate()).slice(-2);
+
+	// Add 2 days to the current date
+	currentDate.setDate(currentDate.getDate() + 2);
+
+	// Format the new date
+	let returnDate =
+		currentDate.getFullYear().toString() +
+		('0' + (currentDate.getMonth() + 1)).slice(-2) +
+		('0' + currentDate.getDate()).slice(-2);
+
+	return { date: date, returnDate: returnDate };
+}
+
+// GET THE AIRPORTS
 async function getAirports(CC, kword) {
 	const bearerToken = process.env.AMADEUS_TOKEN; // Replace with your actual token
 	const url = `https://test.api.amadeus.com/v1/reference-data/locations/cities?countryCode=${CC}&keyword=${kword}&include=AIRPORTS`;
@@ -21,6 +45,7 @@ async function getAirports(CC, kword) {
 	}
 }
 
+// GET THE FLIGHTS
 async function getFlights(origin, destination, date, returnDate) {
 	const bearerToken = process.env.AMADEUS_TOKEN; // Replace with your actual token
 	const url = `https://test.api.amadeus.com/v2/shopping/flight-offers?originLocationCode=${origin}&destinationLocationCode=${destination}&departureDate=${date}returnDate=${returnDate}&adults=1`;
@@ -40,6 +65,7 @@ async function getFlights(origin, destination, date, returnDate) {
 	}
 }
 
+// GET THE FLIGHT DATA (AIRPORTS, ETC.)
 async function getFlightData(cc, kword) {
 	const resp = await getAirports(cc, kword);
 	// Assuming resp.data contains the response structure you provided
@@ -64,4 +90,5 @@ module.exports = {
 	getAirports,
 	getFlights,
 	getFlightData,
+	getDates,
 };

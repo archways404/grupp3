@@ -118,9 +118,12 @@ app.post('/api/Search', async (req, res) => {
 app.post('/api/getCodes', async (req, res) => {
 	const cord_long = req.body.cord_long;
 	const cord_lat = req.body.cord_lat;
+
+	// GET THE STORE LOCATION FROM THE COORDINATES HERE AS WELL
+
 	try {
 		// Get country name from coordinates
-		const response_country = await fetch(
+		const response_location = await fetch(
 			`https://geocode.maps.co/reverse?lat=${cord_lat}&lon=${cord_long}&api_key=${process.env.GEOCODE_KEY}`,
 			{
 				method: 'GET',
@@ -129,18 +132,99 @@ app.post('/api/getCodes', async (req, res) => {
 				},
 			}
 		);
-		const data = await response_country.json();
-		const countryName = data.address.country;
-		const country_code = data.address.country_code;
-		const city = data.address.city;
-		// Get currency code from country
+		const locationData = await response_location.json();
+		const location_countryName = locationData.address.country;
+		const location_country_code = locationData.address.country_code;
+		const location_city = locationData.address.city;
+
+		// NOW CALL THE FUNCTION AGAIN BUT WITH THE DATA FOR THE STORE LOCATION
+
+		// Get country name from coordinates
+		const response_store = await fetch(
+			`https://geocode.maps.co/reverse?lat=${cord_lat}&lon=${cord_long}&api_key=${process.env.GEOCODE_KEY}`,
+			{
+				method: 'GET',
+				headers: {
+					'Content-Type': 'application/json',
+				},
+			}
+		);
+		const storeLocationData = await response_store.json();
+		const store_countryName = storeLocationData.address.country;
+		const store_country_code = storeLocationData.address.country_code;
+		const store_city = storeLocationData.address.city;
 
 		res.status(200).send({
-			//data: data,
-			countryName: countryName,
-			country_code: country_code,
-			city: city,
+			location: {
+				countryName: location_countryName,
+				countryCode: location_country_code,
+				city: location_city,
+			},
+			storeLocation: {
+				countryName: store_countryName,
+				countryCode: store_country_code,
+				city: store_city,
+			},
 		});
+	} catch (error) {
+		console.error(error);
+		return error;
+	}
+});
+
+app.post('/api/getAirports', async (req, res) => {
+	// ORIGIN COUNTRY CODE & CITY
+	const origin_cc = req.body.origin_cc;
+	const origin_city = req.body.origin_city;
+	// DESTINATION COUNTRY CODE & CITY
+	const destination_cc = req.body.destination_cc;
+	const destination_city = req.body.destination_city;
+
+	try {
+		// ORIGIN_RESP CONTAINS CONTAINS ORIGIN AIRPORT INFORMATION (NEEDS FORMATTING)
+		const origin_resp = await flightFn.getAirports(origin_cc, origin_city);
+
+		// DESTINATION_RESP CONTAINS DESTINATION AIRPORT INFORMATION (NEEDS FORMATTING)
+		const destination_resp = await flightFn.getAirports(
+			destination_cc,
+			destination_city
+		);
+
+		// RETURN THE FORMATTED DATA
+		res.status(200).send({
+			origin: origin_resp,
+			destination: destination_resp,
+		});
+	} catch (error) {
+		console.error(error);
+		return error;
+	}
+});
+
+app.post('/api/getFlights', async (req, res) => {
+	// GETTING DATES
+	const dates = await flightFn.getDates();
+
+	// INPUT PARAMS
+	const origin = req.body.origin;
+	const destination = req.body.destination;
+
+	// PARSING OUT DATE & RETURN DATE
+	const date = dates.date;
+	const returnDate = dates.returnDate;
+
+	try {
+		// API CALL
+		const response = await flightFn.getFlights(
+			origin,
+			destination,
+			date,
+			returnDate
+		);
+
+		// MODIFY RESPONSE HERE TO GET THE DATA WE WANT
+
+		res.status(200).send(response.data);
 	} catch (error) {
 		console.error(error);
 		return error;
