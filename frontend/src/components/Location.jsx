@@ -1,24 +1,23 @@
+/* eslint-disable react/prop-types */
 /* eslint-disable no-unused-vars */
 import { useState, useEffect } from 'react';
-import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+import ProgressBar from './ProgressBar';
 
 function Location(props) {
 	// Values
 	const [location, setLocation] = useState('');
 	const [cordinates, setCordinates] = useState({});
 	const [displayLocation, setDisplayLocation] = useState(true);
+	const { onDisplayLocationChange } = props; // Destructure the prop
+
+	const progress = 5;
 
 	function success(pos) {
 		var crd = pos.coords;
-		console.log(crd);
-		console.log('Your current position is:');
-		console.log(`Latitude : ${crd.latitude}`);
-		console.log(`Longitude: ${crd.longitude}`);
 		sessionStorage.setItem('latitude', crd.latitude);
 		sessionStorage.setItem('longitude', crd.longitude);
 		setCordinates({ latitude: crd.latitude, longitude: crd.longitude });
-		setDisplayLocation(false);
+		onDisplayLocationChange(false);
 	}
 
 	function errors(err) {
@@ -39,13 +38,10 @@ function Location(props) {
 					console.log(result);
 					if (result.state === 'granted') {
 						navigator.geolocation.getCurrentPosition(success, errors, options);
-						//If granted then you can directly call your function here
 					} else if (result.state === 'prompt') {
 						navigator.geolocation.getCurrentPosition(success, errors, options);
-						//If prompt then the user will be asked to give permission
 					} else if (result.state === 'denied') {
 						navigator.geolocation.getCurrentPosition(success, errors, options);
-						//If denied then you have to show instructions to enable location
 					}
 				});
 		} else {
@@ -57,12 +53,10 @@ function Location(props) {
 		setLocation(event.target.value);
 	};
 
-	const { onDisplayLocationChange } = props; // Destructure the prop
-
 	const handleLocationSubmit = async (e) => {
 		e.preventDefault(); // Prevent default form submission behavior
 		try {
-			const response = await fetch('http://localhost:9999/api/location/', {
+			const response = await fetch('http://localhost:9999/api/sendLocation/', {
 				method: 'POST',
 				headers: {
 					'Content-Type': 'application/json',
@@ -71,68 +65,60 @@ function Location(props) {
 			});
 			if (response.status === 200) {
 				const data = await response.json();
-				const locationData = data.location;
+				const cords = data.cordinates;
 				setDisplayLocation(false);
-				console.log(data.location);
-				toast.success(`Your location: ${locationData}`, {
-					position: toast.POSITION.TOP_CENTER,
-				});
+				console.log(cords);
+				sessionStorage.setItem('latitude', cords.latitude);
+				sessionStorage.setItem('longitude', cords.longitude);
 				// reutrn value to parent
 				onDisplayLocationChange(false);
 			}
 		} catch (err) {
 			console.log(err);
-			toast.error(`Response from backend: \n ${err}`, {
-				position: toast.POSITION.TOP_CENTER,
-			});
 		}
-	};
-
-	const contextClass = {
-		success: 'bg-green-700',
-		error: 'bg-red-700',
-		info: 'bg-gray-700',
-		warning: 'bg-orange-500',
-		default: 'bg-indigo-700',
-		dark: 'bg-white-600 font-gray-300',
 	};
 
 	return (
 		<>
-			<ToastContainer
-				toastClassName={({ type }) =>
-					contextClass[type || 'dark'] +
-					' relative flex p-1 min-h-10 rounded-md justify-between overflow-hidden cursor-pointer'
-				}
-				bodyClassName={() => 'text-sm font-white font-med block p-3'}
-				position="bottom-left"
-				autoClose={3000}
-			/>
-			<div className="flex justify-center items-center h-screen bg-slate-700">
-				<form
-					onSubmit={handleLocationSubmit}
-					className="flex flex-col items-center space-y-4">
-					<input
-						className="w-64 h-12 px-4 rounded-md bg-slate-800 text-gray-200"
-						placeholder="Enter your location"
-						type="text"
-						value={location}
-						onChange={handleChangeLocation}
-					/>
-					<button
-						type="submit"
-						className="bg-green-500 hover:bg-green-600 text-black py-2 px-4 rounded">
-						Next
-					</button>
-					<button
-						className="bg-green-500 hover:bg-green-600 text-black py-2 px-4 rounded"
-						onClick={fetchLocation}>
-						Fetch Location
-					</button>
-				</form>
+			<div className="flex justify-center items-center h-screen bg-gray-900">
+				{/* Main Container with a More Modern Layout */}
+				<div className="w-full max-w-md p-6 bg-gray-800 rounded-lg shadow-xl">
+					<h1 className="text-green-500 text-4xl font-bold mb-6 text-center">
+						DK BEER INTERNATIONAL
+					</h1>
+
+					{/* Form Container */}
+					<form
+						onSubmit={handleLocationSubmit}
+						className="flex flex-col space-y-4">
+						<input
+							className="w-full h-12 px-4 rounded-md bg-gray-700 text-gray-300 border border-gray-600 focus:border-green-500 focus:outline-none"
+							placeholder="Enter your location"
+							type="text"
+							value={location}
+							onChange={handleChangeLocation}
+						/>
+						<div className="flex space-x-3">
+							<button
+								type="submit"
+								className="flex-1 bg-green-600 hover:bg-green-700 hover:font-bold text-black py-2 px-4 rounded-md transition duration-300 ease-in-out">
+								Next
+							</button>
+							<button
+								className="flex-1 bg-green-600 hover:bg-green-700 hover:font-bold text-black py-2 px-4 rounded-md transition duration-300 ease-in-out"
+								onClick={fetchLocation}>
+								Fetch Location
+							</button>
+						</div>
+					</form>
+				</div>
 			</div>
+			<ProgressBar progress={progress} />
 		</>
 	);
+
 }
 
 export default Location;
+
+

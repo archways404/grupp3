@@ -18,6 +18,13 @@ function calcDistance(lat1, lon1, lat2, lon2) {
 	return earthRadiusKm * c;
 }
 
+function calculateDrivingCost(distanceKm, fuelEconomy, costPerLiter) {
+	const fuelUsed = (distanceKm * fuelEconomy) / 100;
+	const totalCost = fuelUsed * costPerLiter * 1.05;
+	return totalCost;
+}
+
 module.exports = {
 	calcDistance,
+	calculateDrivingCost,
 };
