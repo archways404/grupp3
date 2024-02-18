@@ -205,6 +205,7 @@ app.post('/api/getFlights', async (req, res) => {
 	// GETTING DATES
 	const dates = await flightFn.getDates();
 
+
 	// INPUT PARAMS
 
 	const origin = req.body.origin;
@@ -412,10 +413,12 @@ app.post('/api/getStoreLocation', async (req, res) => {
 			if (distance < minDistance) {
 				minDistance = distance;
 				closestStore = store;
+				airportSearch(closestStore.address.city);
 			}
 		});
 		console.log(
 			`The closest store is ${closestStore.brand} located at ${closestStore.address.street}, ${closestStore.address.city}. Distance: ${minDistance} km`
+			
 		);
 		res.status(200).send({
 			closestStore: closestStore.address,
@@ -426,6 +429,24 @@ app.post('/api/getStoreLocation', async (req, res) => {
 		res.status(500).send('An error occurred');
 	}
 });
+
+app.get('/airportSearch/', function(req, res, next) {
+	const location = req.query.location;
+console.log("PLATS!! " + location);
+
+	// Use the location in the Amadeus API call
+	amadeus.referenceData.locations.get({
+		keyword: location,
+		subType: 'AIRPORT,CITY'
+	}).then(function(response) {
+		res.json(response.data);
+		console.log(response.data);
+	}).catch(function(error) {
+		console.log("error");
+		console.log(error.response);
+	});
+});
+
 
 // Configuration for the server
 http.createServer(app).listen(port, () => {
