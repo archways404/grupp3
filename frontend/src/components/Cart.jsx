@@ -81,6 +81,63 @@ function Cart(props) {
 			const location_longitude = sessionStorage.getItem('longitude');
 			const location_latitude = sessionStorage.getItem('latitude');
 
+			const flightLocationResp = await fetch(
+				'http://localhost:9999/api/getCodes/',
+				{
+					method: 'POST',
+					headers: {
+						'Content-Type': 'application/json',
+					},
+					body: JSON.stringify({
+						cord_long: location_longitude,
+						cord_lat: location_latitude,
+					}),
+				}
+			);
+			const data1 = await flightLocationResp.json();
+
+			console.log('test2', data1.location);
+			console.log('test3', data1.storeLocation);
+
+			const fightAirportCodes = await fetch(
+				'http://localhost:9999/api/getAirports/',
+				{
+					method: 'POST',
+					headers: {
+						'Content-Type': 'application/json',
+					},
+					body: JSON.stringify({
+						origin_cc: data1.location.countryCode,
+						origin_city: data1.location.city,
+						destination_cc: data1.storeLocation.countryCode,
+						destination_city: data1.storeLocation.city,
+					}),
+				}
+			);
+
+			const data2 = await fightAirportCodes.json();
+
+			console.log('test4', data2.origin.iata);
+			console.log('test5', data2.destination.iata);
+
+			const flightAirFare = await fetch(
+				'http://localhost:9999/api/getFlights/',
+				{
+					method: 'POST',
+					headers: {
+						'Content-Type': 'application/json',
+					},
+					body: JSON.stringify({
+						origin: data2.origin.iata,
+						destination: data2.destination.iata,
+					}),
+				}
+			);
+
+			const data3 = await flightAirFare.json();
+
+			console.log('test6', data3);
+
 			const response = await fetch('http://localhost:9999/api/StoreLocation/', {
 				method: 'POST',
 				headers: {
@@ -106,6 +163,7 @@ function Cart(props) {
 				setCurrentDistance(data.distance);
 				setDriveGas(data.costs);
 				setDriveEV(data.costsElectric);
+				setDriveFlight(data3);
 				setRenderTravel(true);
 				setSubmitClicked(true);
 			} else {
@@ -135,9 +193,8 @@ function Cart(props) {
 			sessionStorage.setItem('travelCost', JSON.stringify(driveEV));
 		} else if (travelOption === 'flight') {
 			travelCost = parseFloat(driveFlight);
-			sessionStorage.setItem('travelCost', JSON.stringify(100));
+			sessionStorage.setItem('travelCost', JSON.stringify(driveFlight));
 		}
-
 
 		return (itemsTotalCost + travelCost).toFixed(2);
 	};

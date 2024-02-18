@@ -118,9 +118,6 @@ app.post('/api/Search', async (req, res) => {
 app.post('/api/getCodes', async (req, res) => {
 	const cord_long = req.body.cord_long;
 	const cord_lat = req.body.cord_lat;
-
-	// GET THE STORE LOCATION FROM THE COORDINATES HERE AS WELL
-
 	try {
 		// Get country name from coordinates
 		const response_location = await fetch(
@@ -137,23 +134,6 @@ app.post('/api/getCodes', async (req, res) => {
 		const location_country_code = locationData.address.country_code;
 		const location_city = locationData.address.city;
 
-		// NOW CALL THE FUNCTION AGAIN BUT WITH THE DATA FOR THE STORE LOCATION
-
-		// Get country name from coordinates
-		const response_store = await fetch(
-			`https://geocode.maps.co/reverse?lat=${cord_lat}&lon=${cord_long}&api_key=${process.env.GEOCODE_KEY}`,
-			{
-				method: 'GET',
-				headers: {
-					'Content-Type': 'application/json',
-				},
-			}
-		);
-		const storeLocationData = await response_store.json();
-		const store_countryName = storeLocationData.address.country;
-		const store_country_code = storeLocationData.address.country_code;
-		const store_city = storeLocationData.address.city;
-
 		res.status(200).send({
 			location: {
 				countryName: location_countryName,
@@ -161,9 +141,9 @@ app.post('/api/getCodes', async (req, res) => {
 				city: location_city,
 			},
 			storeLocation: {
-				countryName: store_countryName,
-				countryCode: store_country_code,
-				city: store_city,
+				countryName: 'Denmark',
+				countryCode: 'DK',
+				city: 'Copenhagen',
 			},
 		});
 	} catch (error) {
@@ -205,6 +185,8 @@ app.post('/api/getFlights', async (req, res) => {
 	// GETTING DATES
 	const dates = await flightFn.getDates();
 
+	console.log('dates', dates);
+
 	// INPUT PARAMS
 
 	const origin = req.body.origin;
@@ -224,7 +206,7 @@ app.post('/api/getFlights', async (req, res) => {
 		);
 
 		// MODIFY RESPONSE HERE TO GET THE DATA WE WANT
-		console.log(response.data.price.total);
+		console.log(response.data);
 
 		res.status(200).send(response.data);
 	} catch (error) {
