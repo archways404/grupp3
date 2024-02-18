@@ -26,7 +26,7 @@ async function getDates() {
 
 // GET THE AIRPORTS
 async function getAirports(CC, kword) {
-	const bearerToken = process.env.AMADEUS_TOKEN; // Replace with your actual token
+	const bearerToken = await getBearerToken(); // Replace with your actual token
 	const url = `https://test.api.amadeus.com/v1/reference-data/locations/cities?countryCode=${CC}&keyword=${kword}&include=AIRPORTS`;
 
 	try {
@@ -80,7 +80,7 @@ async function getBearerToken() {
 			body: `client_id=${client_id}&client_secret=${client_secret}&grant_type=${grant_type}`,
 		});
 		const data = await response.json();
-		return { data: data.access_token };
+		return data.access_token;
 	} catch (error) {
 		console.error(error);
 		return null;
